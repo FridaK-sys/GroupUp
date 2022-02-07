@@ -1,5 +1,5 @@
 default:
-  image: npm
+  image: node
 
 .default_rules:
   rules:
