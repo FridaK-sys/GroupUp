@@ -38,3 +38,6 @@ build:
   script: npm run build
   rules:
     - !reference [.default_rules, rules]
+  artifacts:
+    paths:
+      - build/*
