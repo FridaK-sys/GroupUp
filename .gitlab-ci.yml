@@ -1,0 +1,54 @@
+#
+# https://gitlab.com/gitlab-org/gitlab/-/tree/master/lib/gitlab/ci/templates/Nodejs.gitlab-ci.yml
+#
+image: node:latest
+
+# Cache modules in between jobs
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - .npm/
+
+before_script:
+  - npm ci --cache .npm --prefer-offline
+
+.default_rules:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH)
+    - if: ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main")
+    - if: ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev")
+
+stages:
+  - test
+  - coverage
+  #- quality
+  #- bugs
+  - dist
+
+branch:
+  stage: .pre
+  script: exit 1
+  rules:
+    - if: ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME != "dev")
+
+test:
+  stage: test
+  script: npm test
+  rules:
+    - !reference [.default_rules, rules]
+
+coverage:
+  stage: coverage
+  script: npm test -- --coverage
+  rules:
+    - !reference [.default_rules, rules]
+
+build:
+  stage: dist
+  needs: ["test"]
+  script: npm run build
+  rules:
+    - !reference [.default_rules, rules]
+  artifacts:
+    paths:
+      - build/*
