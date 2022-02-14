@@ -7,9 +7,15 @@ import Paper from "@mui/material/Paper";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
+import DatePicker from "@mui/lab/DatePicker";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { addYears, isBefore } from "date-fns";
 
 export default function SignUpForm() {
   const [passwordError, setPasswordError] = React.useState(false);
+  const [ageError, setAgeError] = React.useState(false);
+  const [birthDate, setBirthDate] = React.useState(null);
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -22,18 +28,24 @@ export default function SignUpForm() {
     if (password1 !== password2) {
       setPasswordError(true);
     }
-    alert(
-      "brukernavn: " +
-        username +
-        ", fullt navn: " +
-        fullName +
-        ", interesser: " +
-        intrests +
-        ", passord: " +
-        password1 +
-        ", gjenta passord: " +
-        password2
-    );
+    if (isBefore(birthDate, addYears(new Date(), -18))) {
+      console.log("old enough: " + birthDate);
+    } else {
+      console.log("not old enough");
+      setAgeError(true);
+    }
+    // alert(
+    //   "brukernavn: " +
+    //     username +
+    //     ", fullt navn: " +
+    //     fullName +
+    //     ", interesser: " +
+    //     intrests +
+    //     ", passord: " +
+    //     password1 +
+    //     ", gjenta passord: " +
+    //     password2
+    // );
   };
   return (
     <Grid
@@ -93,6 +105,24 @@ export default function SignUpForm() {
             label="interesser"
             id="interesser"
           />
+          <LocalizationProvider fullWidth dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="fødselsdato"
+              value={birthDate}
+              onChange={(newValue) => {
+                setBirthDate(newValue);
+                setAgeError(false);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  required
+                  fullWidth
+                  error={ageError}
+                />
+              )}
+            />
+          </LocalizationProvider>
           <TextField
             margin="normal"
             required

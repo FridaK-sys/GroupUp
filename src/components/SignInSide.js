@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -12,8 +10,6 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { alignProperty } from "@mui/material/styles/cssUtils";
-import { AppRegistrationOutlined } from "@mui/icons-material";
 import { Modal } from "@mui/material";
 import SignUpForm from "./SignUpForm";
 
@@ -47,9 +43,9 @@ export default function SignInSide() {
       password: data.get("password"),
     });
   };
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [signUpOpen, setSignUpOpen] = React.useState(false);
+  const handleOpenSignUp = () => setSignUpOpen(true);
+  const handleCloseSignUp = () => setSignUpOpen(false);
 
   return (
     <ThemeProvider theme={theme}>
@@ -62,7 +58,7 @@ export default function SignInSide() {
           md={7}
           sx={{
             backgroundImage:
-              "url(https://source.unsplash.com/random?activities,hiking)",
+              "url(https://source.unsplash.com/random?hobby)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -123,11 +119,8 @@ export default function SignInSide() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() => {
-                  alert("signing in...");
-                }}
               >
-                Sign In
+                Logg inn
               </Button>
               <Grid container>
                 {/* <Grid item xs>
@@ -140,7 +133,7 @@ export default function SignInSide() {
                     href="#"
                     variant="body2"
                     onClick={() => {
-                      handleOpen();
+                      handleOpenSignUp();
                     }}
                   >
                     {"Don't have an account? Sign Up"}
@@ -153,8 +146,8 @@ export default function SignInSide() {
         </Grid>
       </Grid>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={signUpOpen}
+        onClose={handleCloseSignUp}
         // aria-labelledby="modal-modal-title"
         // aria-describedby="modal-modal-description"
       >
