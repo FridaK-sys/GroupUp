@@ -65,7 +65,7 @@ export default function SignInSide() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid container component="main" sx={{ height: "100vh", width: "100vw" }}>
         <CssBaseline />
         <Grid
           item
@@ -133,6 +133,7 @@ export default function SignInSide() {
                   autoComplete="username"
                   error={signInError}
                   autoFocus
+                  onChange={() => {setSignInError("")}}
                 />
                 <TextField
                   margin="normal"
@@ -144,6 +145,7 @@ export default function SignInSide() {
                   id="passord"
                   autoComplete="current-password"
                   error={signInError}
+                  onChange={() => {setSignInError("")}}
                 />
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
