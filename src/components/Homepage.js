@@ -38,7 +38,7 @@ const groupImage = require('./../images/hest.png');
 
 
 export default function Homepage() {
-  let navigate = useNavigate();
+  const navigate = React.useRef(useNavigate());
 
   React.useEffect(() => {
     let tokenSession = window.sessionStorage.getItem("token");

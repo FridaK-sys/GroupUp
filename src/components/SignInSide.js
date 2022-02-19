@@ -39,7 +39,7 @@ import { useNavigate } from "react-router-dom";
 const theme = createTheme();
 
 export default function SignInSide() {
-  let navigate = useNavigate();
+  const navigate = React.useRef(useNavigate());
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
