@@ -112,7 +112,7 @@ export default function SignInSide() {
                 onSubmit={handleSubmit}
                 sx={{ mt: 1, width: "80%" }}
               >
-                <Collapse in={signInError}>
+                <Collapse in={signInError !== ""}>
                   <Alert
                     severity="error"
                     onClose={() => {
@@ -131,7 +131,7 @@ export default function SignInSide() {
                   label="Brukernavn"
                   name="brukernavn"
                   autoComplete="username"
-                  error={signInError}
+                  error={signInError !== ""}
                   autoFocus
                   onChange={() => {setSignInError("")}}
                 />
@@ -144,7 +144,7 @@ export default function SignInSide() {
                   type="password"
                   id="passord"
                   autoComplete="current-password"
-                  error={signInError}
+                  error={signInError !== ""}
                   onChange={() => {setSignInError("")}}
                 />
                 <FormControlLabel

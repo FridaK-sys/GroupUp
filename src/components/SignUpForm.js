@@ -87,7 +87,7 @@ export default function SignUpForm(props) {
         onSubmit={handleRegister}
         sx={{ mt: 1, width: "80%" }}
       >
-        <Collapse in={usernameError}>
+        <Collapse in={usernameError !== ""}>
           <Alert
             severity="error"
             onClose={() => {
@@ -105,11 +105,11 @@ export default function SignUpForm(props) {
           id="brukernavn"
           label="Brukernavn"
           name="brukernavn"
-          error={usernameError}
+          error={usernameError !== ""}
           autoFocus
           onChange={() => {setUsernameError("")}}
         />
-        <Collapse in={nameError}>
+        <Collapse in={nameError !== ""}>
           <Alert
             severity="error"
             onClose={() => {
@@ -127,7 +127,7 @@ export default function SignUpForm(props) {
           name="fulltNavn"
           label="Fullt navn"
           id="fulltNavn"
-          error={nameError}
+          error={nameError !== ""}
           onChange={() => {setNameError("")}}
         />
         <TextField
@@ -137,7 +137,7 @@ export default function SignUpForm(props) {
           label="Interesser"
           id="interesser"
         />
-        <Collapse in={ageError}>
+        <Collapse in={ageError !== ""}>
           <Alert
             severity="error"
             onClose={() => {
@@ -157,11 +157,11 @@ export default function SignUpForm(props) {
               setAgeError(false);
             }}
             renderInput={(params) => (
-              <TextField {...params} margin="normal" required fullWidth error={ageError} onChange={() => {setAgeError("");}}/>
+              <TextField {...params} margin="normal" required fullWidth error={ageError !== ""} onChange={() => {setAgeError("");}}/>
             )}
           />
         </LocalizationProvider>
-        <Collapse in={passwordError}>
+        <Collapse in={passwordError !== ""}>
           <Alert
             severity="error"
             onClose={() => {
@@ -176,7 +176,7 @@ export default function SignUpForm(props) {
           margin="normal"
           required
           fullWidth
-          error={passwordError}
+          error={passwordError !== ""}
           name="passord"
           label="Passord"
           type="password"
@@ -190,7 +190,7 @@ export default function SignUpForm(props) {
           margin="normal"
           required
           fullWidth
-          error={passwordError}
+          error={passwordError !== ""}
           name="gjentaPassord"
           label="Gjenta passord"
           type="password"
