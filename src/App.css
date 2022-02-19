@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+/* userpage and edit page css*/
+.userInfoLabels {
+  display: block;
+  text-align: center;
+  white-space: pre-wrap;
+  margin-top: 50px;
+  line-height: 10px;
+  font-size: 20px;
+}
+.userInfoLabels #labels {
+  line-height: 20px;
+}
+.pic-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 5%;
+  height: auto;
+}
+.edit-btn {
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+}
+.edit-popup {
+  width: 80%;
+  height: 80%;
+}
+#biography {
+  height: 200px;
+}
