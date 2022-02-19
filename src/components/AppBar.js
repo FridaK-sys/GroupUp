@@ -89,21 +89,18 @@ export default function PrimarySearchAppBar() {
   const renderMenu = (
     <Menu // -----------------------------------------------------------ProfileMenu
       anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
       id={menuId}
       keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
+      style={{marginTop: "12px"}}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Profil</MenuItem>
+      <MenuItem onClick={() => {
+        window.localStorage.removeItem("token");
+        window.sessionStorage.removeItem("token");
+        navigate("/");
+      }}>Logg ut</MenuItem>
     </Menu>
   );
 
