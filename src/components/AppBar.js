@@ -187,6 +187,13 @@ export default function PrimarySearchAppBar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              style={{marginLeft: '25%'}}
+              onKeyPress={(e) => {
+                if (e.key === "Enter" && StyledInputBase != null) {
+                  console.log(e.target.value);
+                  
+                }
+              }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
