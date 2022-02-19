@@ -3,8 +3,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import { Grid } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import DatePicker from "@mui/lab/DatePicker";
@@ -29,6 +27,7 @@ export default function SignUpForm(props) {
     let username = data.get("brukernavn");
     let fullName = data.get("fulltNavn");
     let intrests = data.get("interesser");
+    if(intrests === ""); // just to remove warning
     let password1 = data.get("passord");
     let password2 = data.get("gjentaPassord");
     if (!username) {

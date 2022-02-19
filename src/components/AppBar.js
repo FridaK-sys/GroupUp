@@ -11,7 +11,6 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
@@ -52,7 +51,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: 'calc(1em + ${theme.spacing(4)})',
+    paddingLeft: '2%',
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
@@ -180,7 +179,7 @@ export default function PrimarySearchAppBar() {
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             <Link to="/homepage" >
-            <img src= {Logo} style={{width: 60, position: 'relative', top: '7px'}} />
+            <img alt="logo" src= {Logo} style={{width: 60, position: 'relative', top: '7px'}} />
             </Link>
           </Typography>
           <Search>

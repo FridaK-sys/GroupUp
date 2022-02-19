@@ -7,7 +7,6 @@ import ListItem from '@mui/material/ListItem';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
 import GroupIcon from '@mui/icons-material/Group';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';

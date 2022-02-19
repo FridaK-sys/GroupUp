@@ -1,9 +1,7 @@
 // import './App.css';
 import * as React from "react";
-import ReactDOM from "react-dom";
 import SignInSide from "./components/SignInSide";
 import { Routes, Route } from "react-router-dom";
-import SignUpForm from "./components/SignUpForm";
 import Homepage from "./components/Homepage"
 import Searchresult from "./components/Searchresult"
 
