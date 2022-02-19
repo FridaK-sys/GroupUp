@@ -14,6 +14,7 @@ import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuList from './HomePageList'
+import { useNavigate } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -37,7 +38,15 @@ const groupImage = require('./../images/hest.png');
 
 
 export default function Homepage() {
+  const navigate = React.useRef(useNavigate());
 
+  React.useEffect(() => {
+    let tokenSession = window.sessionStorage.getItem("token");
+    let tokenLocal = window.localStorage.getItem("token");
+    if(!tokenSession && !tokenLocal)  {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

@@ -39,7 +39,7 @@ import { useNavigate } from "react-router-dom";
 const theme = createTheme();
 
 export default function SignInSide() {
-  let navigate = useNavigate();
+  const navigate = React.useRef(useNavigate());
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -47,7 +47,15 @@ export default function SignInSide() {
     console.log({
       username: data.get("brukernavn"),
       password: data.get("passord"),
+      remember: data.get("remember"),
     });
+
+    let token = "this is my token";
+    if (data.get("remember")) {
+      window.localStorage.setItem("token", token);
+    } else {
+      window.sessionStorage.setItem("token", token);
+    }
     navigate("/homepage");
   };
   const [signInError, setSignInError] = React.useState("");
@@ -59,10 +67,12 @@ export default function SignInSide() {
     setSignUpOpen(false);
   };
 
-  // React.useEffect(() => {
-  //   alert("najs");
-  //   window.sessionStorage.setItem("token", "q23423rjqskjrkew");
-  // }, []);
+  React.useEffect(() => {
+    let tokenLocal = window.localStorage.getItem("token");
+    if (tokenLocal) {
+      navigate("/homepage");
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -119,7 +129,7 @@ export default function SignInSide() {
                     onClose={() => {
                       setSignInError("");
                     }}
-                    style={{marginTop: "8px"}}
+                    style={{ marginTop: "8px" }}
                   >
                     {signInError}
                   </Alert>
@@ -134,7 +144,9 @@ export default function SignInSide() {
                   autoComplete="username"
                   error={signInError !== ""}
                   autoFocus
-                  onChange={() => {setSignInError("")}}
+                  onChange={() => {
+                    setSignInError("");
+                  }}
                 />
                 <TextField
                   margin="normal"
@@ -146,11 +158,14 @@ export default function SignInSide() {
                   id="passord"
                   autoComplete="current-password"
                   error={signInError !== ""}
-                  onChange={() => {setSignInError("")}}
+                  onChange={() => {
+                    setSignInError("");
+                  }}
                 />
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
                   label="Husk meg"
+                  name="remember"
                 />
                 <Button
                   type="submit"
@@ -161,11 +176,6 @@ export default function SignInSide() {
                   Logg inn
                 </Button>
                 <Grid container>
-                  {/* <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid> */}
                   <Grid item>
                     <Link
                       style={{ cursor: "pointer" }}
@@ -179,7 +189,6 @@ export default function SignInSide() {
                     </Link>
                   </Grid>
                 </Grid>
-                {/* <Copyright sx={{ mt: 5 }} /> */}
               </Box>
             </Box>
           </Animated>
