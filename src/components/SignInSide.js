@@ -17,6 +17,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Alert from "@mui/material/Alert";
 import Collapse from "@mui/material/Collapse";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -39,15 +40,16 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
+  let navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     setSignInError("Kunne ikke logge inn. Prøv igjen.");
-    // eslint-disable-next-line no-console
     console.log({
       username: data.get("brukernavn"),
       password: data.get("passord"),
     });
+    navigate("/homepage");
   };
   const [signInError, setSignInError] = React.useState("");
   const [signUpOpen, setSignUpOpen] = React.useState(false);
@@ -60,7 +62,7 @@ export default function SignInSide() {
 
   // React.useEffect(() => {
   //   alert("najs");
-  //   window.sessionStorage.setItem("key", "value");
+  //   window.sessionStorage.setItem("token", "q23423rjqskjrkew");
   // }, []);
 
   return (
@@ -156,9 +158,6 @@ export default function SignInSide() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  // onClick={() => {
-                  //   alert(window.sessionStorage.getItem("key"));
-                  // }}
                 >
                   Logg inn
                 </Button>

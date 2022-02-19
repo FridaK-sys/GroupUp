@@ -17,7 +17,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 // import MoreIcon from '@mui/icons-material/MoreVert';
-import Logo from './logo.png'
+import Logo from './../images/logo.png'
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -60,6 +62,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+  let navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
 //   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -176,9 +179,9 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            <a href='Homepage.js'>
+            <Link to="/homepage" >
             <img src= {Logo} style={{width: 60, position: 'relative', top: '7px'}} />
-            </a>
+            </Link>
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -189,9 +192,9 @@ export default function PrimarySearchAppBar() {
               inputProps={{ 'aria-label': 'search' }}
               style={{marginLeft: '25%'}}
               onKeyPress={(e) => {
-                if (e.key === "Enter" && StyledInputBase != null) {
+                if (e.key === "Enter" && StyledInputBase !== null && StyledInputBase !== "" ) {
                   console.log(e.target.value);
-                  
+                  navigate("/homepage/search");                  
                 }
               }}
             />
