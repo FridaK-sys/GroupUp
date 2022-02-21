@@ -38,7 +38,7 @@ const groupImage = require('./../images/hest.png');
 
 
 export default function Homepage() {
-  const navigate = React.useRef(useNavigate());
+  let navigate = useNavigate();
 
   React.useEffect(() => {
     let tokenSession = window.sessionStorage.getItem("token");
@@ -46,6 +46,7 @@ export default function Homepage() {
     if(!tokenSession && !tokenLocal)  {
       navigate("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
