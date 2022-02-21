@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Edit from "./EditUserPage";
 import EditUserInfo from "./EditUserPage";
+import Input from "@mui/material/Input";
 
 // dynamic states for Userprofile
 export class Userprofile extends Component {
@@ -19,19 +20,27 @@ export class Userprofile extends Component {
       username: "nordmann99",
       fullName: "Ole Hansen",
       password: "bruh",
-      interests: "øl",
+      interests: "fotball, anime",
       bio: "jeg liker filmer",
-      picture: "",
+      image: null,
       age: 18
     };
+    this.onImageChange = this.onImageChange.bind(this);
   }
-
+  onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      this.setState({
+        image: URL.createObjectURL(img)
+      });
+    }
+  };
   render() {
     return (
       <form className="userInfoLabels">
         <h1> Your user page </h1>
         <div className="pic-container">
-          <ReactRoundedImage image={profilepic} id="profilepic" />
+          <img src={this.state.image} id="profilepic" alt="" />
         </div>
 
         <Typography id="labels">
@@ -44,8 +53,20 @@ export class Userprofile extends Component {
           Bio : {this.state.bio} {"\n"}
         </Typography>
         <div className="edit-btn">
-          <EditUserInfo></EditUserInfo>
+          <EditUserInfo
+            interests={this.state.interests}
+            bio={this.state.bio}
+          ></EditUserInfo>
         </div>
+        <label className="file-input">
+          <Input
+            type="file"
+            variant = "contained"
+            onChange={this.onImageChange}
+            
+          />
+          Velg profilbilde
+        </label>
       </form>
     );
   }

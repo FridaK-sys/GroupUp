@@ -4,14 +4,16 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import Button from "@mui/material/Button";
-
+import Userprofile from "./UserPage";
 import { TextField } from "@mui/material";
 import { Grid } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import Avatar from "@mui/material/Avatar";
+import ProfileData from "./InterestsAndBio";
+import { useState } from "react";
 
-export default function EditUserInfo() {
+export default function EditUserInfo(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -22,6 +24,7 @@ export default function EditUserInfo() {
         edit user info
       </Button>
       <Modal
+        className="edit-modal"
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -69,6 +72,7 @@ export default function EditUserInfo() {
                 name="biography"
                 autoFocus
                 multiline={true}
+                defaultValue={props.bio}
               />
               <TextField
                 margin="normal"
@@ -76,15 +80,11 @@ export default function EditUserInfo() {
                 name="interesser"
                 label="interesser"
                 id="interesser"
+                multiline={true}
+                defaultValue={props.interests}
               />
 
-              
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
+              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Lagre
               </Button>
               <Grid container></Grid>
