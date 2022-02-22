@@ -6,20 +6,22 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuList from './HomePageList'
+import GroupImage from "../images/hest.png";
+import ReactRoundedImage from "react-rounded-image";
+import EditGroupInfo from "./EditGroupInfo";
 
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="Homepage.js">
-//         GroupUp
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
+function Copyright() {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="Homepage.js">
+        GroupUp
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 const theme = createTheme();
 
@@ -34,22 +36,26 @@ export default function Grouppage() {
       <main style={{ display: 'flex' }}>
         {/* Hero unit */}
         <MenuList />
-				<form className="userInfoLabels">
-					<h1> Fotball </h1>
-					<Link to="/homepage" >
-            <img alt="gruppebilde" src= {'./../images/logo.png'} />
-          </Link>
+				<form className="userInfoLabels" style={{position: 'relative', left: '20vw'}}>
+        <h1> Ridning </h1>
+        <div className="pic-container">
+          <ReactRoundedImage image={GroupImage} id="profilepic" />
+        </div>
 
-					<Typography id="labels">
-						Gruppenavn : @{'Fotball'} {"\n"}{" "}
-					</Typography>
-					<Typography id="labels">
-						interesser : {"fotball"} {"\n"}{" "}
-					</Typography>
-					<Typography id="labels">
-						Bio : {"Vi liker fotball"} {"\n"}
-					</Typography>
-				</form>
+        <Typography id="labels">
+          User name : @{'Ridegruppa'} {"\n"}{" "}
+        </Typography>
+        <Typography id="labels">
+          interests : {'Ri hest, ponny, det meste.'} {"\n"}{" "}
+        </Typography>
+        <Typography id="labels">
+          Bio : {'Vi liker ridning'} {"\n"}
+        </Typography>
+        <div className="edit-btn">
+          <EditGroupInfo />
+        </div>
+      </form>
+
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">

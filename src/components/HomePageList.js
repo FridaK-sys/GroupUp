@@ -10,6 +10,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import GroupIcon from '@mui/icons-material/Group';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import { useNavigate } from 'react-router-dom';
 
 export default function NestedList() {
   const [open, setOpen] = React.useState(true);
@@ -19,6 +20,8 @@ export default function NestedList() {
   };
 
   const groups = ["Fotball", "Bil", "Matematikk", "Bading"];
+
+  let navigate = useNavigate();
 
   return (
     <List
@@ -49,7 +52,7 @@ export default function NestedList() {
         <List component="div" disablePadding>
           {groups.map(group => {
             return (
-            <ListItem button href={group.route} sx={{ pl: 4 }}>
+            <ListItem button onClick={() => navigate('/homepage/grouppage')} sx={{ pl: 4 }}>
               <ListItemIcon><ArrowRightIcon /></ListItemIcon>
               <ListItemText primary={group} />
             </ListItem>)
