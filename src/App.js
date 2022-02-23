@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App" style={{ width: "100vw", height: "100vh" }}>
       <Routes>
-        <Route path="/homepage/search/:query" element={<Searchresult />} />
+        <Route path="/homepage/search" element={<Searchresult />} />
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/" element={<SignInSide />} />
       </Routes>

@@ -191,7 +191,7 @@ export default function PrimarySearchAppBar() {
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
                   console.log(e.target.value);        
-                  navigate("/homepage/search/" + e.target.value);                  
+                  navigate("/homepage/search?query=" + e.target.value);                  
                 }
               }}
             />
