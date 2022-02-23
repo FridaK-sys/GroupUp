@@ -153,7 +153,7 @@ export default function SignUpForm(props) {
             value={birthDate}
             onChange={(newValue) => {
               setBirthDate(newValue);
-              setAgeError(false);
+              setAgeError("");
             }}
             renderInput={(params) => (
               <TextField {...params} margin="normal" required fullWidth error={ageError !== ""} onChange={() => {setAgeError("");}}/>
