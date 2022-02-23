@@ -13,6 +13,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuList from './HomePageList'
+import { useNavigate } from 'react-router-dom'
 
 function Copyright() {
   return (
@@ -36,6 +37,20 @@ const groupImage = require('./../images/hest.png');
 
 
 export default function Grouppage() {
+  let navigate = useNavigate();
+  const getSearch = () => {
+    let path = window.location.pathname;
+    let splitted = path.split("/");
+    let search = splitted[splitted.length - 1];
+    return search.replaceAll("%20", " ");
+  }
+  const [query, setQuery] = React.useState(getSearch());
+
+
+  React.useEffect(() => {
+    setQuery(getSearch());
+  }, [navigate])
+
 
 
   return (
@@ -57,7 +72,7 @@ export default function Grouppage() {
           >
             <Container maxWidth="sm">
               <Typography variant="h4" align="center" paragraph>
-                Showing results for '{}'.
+                {"Viser treff for: " + query}
               </Typography>
             </Container>
           </Box>
