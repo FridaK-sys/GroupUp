@@ -18,6 +18,10 @@ import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
+import Bilimage from './../images/Bil.png';
+import Ridningimage from './../images/Ridning.png';
+import Fotballimage from './../images/Fotball.png';
+import Matematikkimage from './../images/Matematikk.png';
 
 const theme = createTheme();
 
@@ -25,7 +29,7 @@ const groups = ["Fotball", "Bil", "Matematikk", "Ridning"];
 const membernums = ['23', '21', '3', '1044'];
 const interests = ['spille fotball', 'skru bil', 'regne', 'Ri hest, ponny eller annet'];
 const members = ['Ruben', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe'];
- 
+const images = [Fotballimage, Bilimage, Matematikkimage, Ridningimage];
 
 export default function Grouppage(props) {
   let navigate = useNavigate();
@@ -65,7 +69,7 @@ export default function Grouppage(props) {
 
         <div className='group' style={{ display: 'flex', width: '70vw', height: '70vh', padding: '5vw', margin: '10vw' }}>
           <div className="pic-container" style={{position: 'absolute', top:'10vh', left: '20vw'}}>
-            <ReactRoundedImage image={require('./../images/' + groups[groupID] + '.png')} id="profilepic" />
+            <ReactRoundedImage image={images[groupID]} id="profilepic" />
             <Typography id="labels" style={{position: 'relative', left: '200px', bottom: '200px', fontSize:'40px'}}>
               @{groups[groupID]} {"\n"}{" "}
             </Typography>
@@ -95,7 +99,7 @@ export default function Grouppage(props) {
                 {members.map((name, index) => {
                   return (
                     <ListItem button key={index} onClick={() => navigate('/homepage')}>
-                      <ListItemIcon><img src={require('./../images/' + groups[groupID] + '.png')} style={{height: '60px'}}/></ListItemIcon>
+                      <ListItemIcon><img src={images[groupID]} style={{height: '60px'}}/></ListItemIcon>
                       <ListItemText primaryTypographyProps={{fontSize: '22px'}} primary={name}/>
                     </ListItem>)
                 })}
