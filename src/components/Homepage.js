@@ -34,11 +34,10 @@ const theme = createTheme();
 
 const groupImage = require('./../images/hest.png');
 
-
-
 export default function Homepage() {
+  
 
-
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

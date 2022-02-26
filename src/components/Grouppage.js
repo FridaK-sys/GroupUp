@@ -9,6 +9,10 @@ import MenuList from './HomePageList'
 import GroupImage from "../images/hest.png";
 import ReactRoundedImage from "react-rounded-image";
 import EditGroupInfo from "./EditGroupInfo";
+import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 function Copyright() {
   return (
@@ -25,38 +29,60 @@ function Copyright() {
 
 const theme = createTheme();
 
-export default function Grouppage() {
+const groups = ["Fotball", "Bil", "Matematikk", "Ridning"];
+const membernums = ['23', '21', '3', '1044'];
+const interests = ['spille fotball', 'skru bil', 'regne', 'Ri hest, ponny eller annet'];
 
+ 
+export default function Grouppage(props) {
+  let navigate = useNavigate();
+
+  const [groupID, setGroupID] = useState(null);
+
+  const getID = () => {
+    let path = window.location.pathname;
+    let id = path.split('/')[path.split('/').length - 1];
+    return id;
+  } 
+  React.useEffect(() => {
+    setGroupID(getID());
+  }, [])
+
+  React.useEffect(() => {
+    setGroupID(getID());
+  }, [navigate])
+
+  const location = useLocation();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
         <AppBar></AppBar>
       </Box>
-      <main style={{ display: 'flex' }}>
+      <MenuList />
+      <Box style={{ display: 'flex', position: 'relative', left: '25vw'}}>
         {/* Hero unit */}
-        <MenuList />
-				<form className="userInfoLabels" style={{position: 'relative', left: '20vw'}}>
-        <h1> Ridning </h1>
         <div className="pic-container">
           <ReactRoundedImage image={GroupImage} id="profilepic" />
         </div>
 
         <Typography id="labels">
-          User name : @{'Ridegruppa'} {"\n"}{" "}
+          @{groups[groupID]} {"\n"}{" "}
         </Typography>
         <Typography id="labels">
-          interests : {'Ri hest, ponny, det meste.'} {"\n"}{" "}
+          Antall medlemmer: {membernums[groupID]} {"\n"}{" "}
         </Typography>
         <Typography id="labels">
-          Bio : {'Vi liker ridning'} {"\n"}
+          interesser: {interests[groupID]} {"\n"}{" "}
+        </Typography>
+        <Typography id="labels">
+          Biografi: {'Vi liker balblabla'} {"\n"}
         </Typography>
         <div className="edit-btn">
           <EditGroupInfo />
         </div>
-      </form>
 
-      </main>
+      </Box>
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
@@ -70,7 +96,7 @@ export default function Grouppage() {
         >
           Connecting students since 2022
         </Typography>
-        {/* <Copyright /> */}
+        {<Copyright />}
       </Box>
       {/* End footer */}
     </ThemeProvider>

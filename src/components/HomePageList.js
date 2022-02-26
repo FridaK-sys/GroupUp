@@ -13,13 +13,13 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useNavigate } from 'react-router-dom';
 
 export default function NestedList() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  const groups = ["Fotball", "Bil", "Matematikk", "Bading"];
+  const groups = ["Fotball", "Bil", "Matematikk", "Ridning"];
 
   let navigate = useNavigate();
 
@@ -50,11 +50,12 @@ export default function NestedList() {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {groups.map(group => {
+          {groups.map((name, index) => {
             return (
-            <ListItem button onClick={() => navigate('/homepage/grouppage')} sx={{ pl: 4 }}>
+            <ListItem button key={index} onClick={() => navigate('/homepage/grouppage/' + index)} sx={{ pl: 4 }}>
               <ListItemIcon><ArrowRightIcon /></ListItemIcon>
-              <ListItemText primary={group} />
+              <ListItemText primary={name} />
+              {console.log(index)}
             </ListItem>)
           })}
         </List>
