@@ -25,7 +25,7 @@ export default function NestedList() {
 
   return (
     <List
-      sx={{ width: '20%', maxWidth: 360, bgcolor: 'background.paper' }}
+      sx={{ width: '20%', bgcolor: 'background.paper', height: '100%'}}
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
@@ -55,7 +55,6 @@ export default function NestedList() {
             <ListItem button key={index} onClick={() => navigate('/homepage/grouppage/' + index)} sx={{ pl: 4 }}>
               <ListItemIcon><ArrowRightIcon /></ListItemIcon>
               <ListItemText primary={name} />
-              {console.log(index)}
             </ListItem>)
           })}
         </List>
