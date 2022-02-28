@@ -1,18 +1,13 @@
-import { render } from "react-dom";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import Button from "@mui/material/Button";
-import Userprofile from "./UserPage";
 import { TextField } from "@mui/material";
 import { Grid } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import Avatar from "@mui/material/Avatar";
-import ProfileData from "./InterestsAndBio";
-import { useState } from "react";
-
 export default function EditUserInfo(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
