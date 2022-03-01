@@ -12,7 +12,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
 export default function NestedList() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);

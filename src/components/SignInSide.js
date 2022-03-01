@@ -56,6 +56,7 @@ export default function SignInSide() {
     } else {
       window.sessionStorage.setItem("token", token);
     }
+    navigate("/homepage");
   };
   const [signInError, setSignInError] = React.useState("");
   const [signUpOpen, setSignUpOpen] = React.useState(false);
