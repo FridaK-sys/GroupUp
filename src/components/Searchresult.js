@@ -3,9 +3,7 @@ import AppBar from "./AppBar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,8 +11,8 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuList from "./HomePageList";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { fontStyle } from "@mui/system";
+import { useSearchParams } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -36,7 +34,7 @@ const theme = createTheme();
 const groupImage = require("./../images/hest.png");
 
 export default function Grouppage() {
-  let navigate = useNavigate();
+  const location = useLocation();
   const getSearch = () => {
     let path = window.location.pathname;
     let splitted = path.split("/");
@@ -52,8 +50,11 @@ export default function Grouppage() {
     } else {
       setQuery("");
     }
+    if (false) {
+      setSearchParams("testing");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate]);
+  }, [location]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -87,9 +88,9 @@ export default function Grouppage() {
                     onClick={() => {
                       alert("klikk");
                     }}
-                    style={{ cursor: "pointer"}}
-                    // sx={{bgcolor: "#f7f7f7"}}
+                    style={{ cursor: "pointer", border: '2px solid' }}
                     variant="outlined"
+                    sx={{bgcolor: "text.main", p: 1}}
                   >
                     <CardMedia
                       component="img"
@@ -98,11 +99,10 @@ export default function Grouppage() {
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        <b>Heading</b>
+                        <b>Gruppenavn</b>
                       </Typography>
                       <Typography variant="body1">
-                        This is a media card. You can use this section to
-                        describe the content.
+                        Her skal det stå litt info om gruppen.
                       </Typography>
                     </CardContent>
                   </Card>
