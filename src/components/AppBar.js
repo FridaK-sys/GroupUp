@@ -95,7 +95,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profil</MenuItem>
+      <MenuItem onClick={() => {navigate("/userpage");}}>Profil</MenuItem>
       <MenuItem onClick={() => {
         window.localStorage.removeItem("token");
         window.sessionStorage.removeItem("token");
