@@ -8,9 +8,10 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import GroupIcon from '@mui/icons-material/Group';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useNavigate } from 'react-router-dom';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 export default function NestedList() {
   const [open, setOpen] = React.useState(false);
@@ -50,10 +51,14 @@ export default function NestedList() {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
+          <ListItem button key='createGroup'>
+            <ListItemIcon><AddCircleOutlineIcon /></ListItemIcon>
+            <ListItemText primary='Opprett Gruppe' />
+          </ListItem>
           {groups.map((name, index) => {
             return (
             <ListItem button key={index} onClick={() => navigate('/homepage/grouppage/' + index)} sx={{ pl: 4 }}>
-              <ListItemIcon><ArrowRightIcon /></ListItemIcon>
+              <ListItemIcon><FiberManualRecordIcon /></ListItemIcon>
               <ListItemText primary={name} />
             </ListItem>)
           })}
