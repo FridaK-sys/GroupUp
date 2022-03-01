@@ -16,7 +16,7 @@ export default function EditUserInfo(props) {
   return (
     <div>
       <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleOpen}>
-        edit user info
+        Rediger info
       </Button>
       <Modal
         className="edit-modal"
