@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
-import ReactDOM from "react-dom";
 
 import Typography from "@mui/material/Typography";
 
@@ -9,19 +7,7 @@ import Box from "@mui/material/Box";
 import EditUserInfo from "./EditUserPage";
 import Input from "@mui/material/Input";
 import AppBar from './AppBar';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Link from '@mui/material/Link';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuList from './HomePageList'
-import { useNavigate } from 'react-router-dom';
 
 // dynamic states for Userprofile
 export class UserProfile extends Component {
