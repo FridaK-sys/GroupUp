@@ -12,6 +12,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useNavigate } from 'react-router-dom';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import CreateNewGroup from './CreateNewGroup'
 
 export default function NestedList() {
   const [open, setOpen] = React.useState(false);
@@ -51,9 +52,9 @@ export default function NestedList() {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button key='createGroup'>
+          <ListItem button key='createGroup' sx={{ml: 2}}>
             <ListItemIcon><AddCircleOutlineIcon /></ListItemIcon>
-            <ListItemText primary='Opprett Gruppe' />
+            <div id='creategroup'><CreateNewGroup /></div>
           </ListItem>
           {groups.map((name, index) => {
             return (

@@ -9,15 +9,15 @@ import Paper from "@mui/material/Paper";
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from "@mui/material/Avatar";
 
-export default function EditGroupInfo() {
+export default function CreateNewGroup() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleOpen}>
-        Rediger gruppe
+      <Button sx={{ ml: -1 }} onClick={handleOpen}>
+        Opprett gruppe
       </Button>
       <Modal
         open={open}
@@ -50,7 +50,7 @@ export default function EditGroupInfo() {
               <EditIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Rediger info
+              Opprett ny gruppe
             </Typography>
             <Box
               component="form"
@@ -58,20 +58,29 @@ export default function EditGroupInfo() {
               //onSubmit={handleRegister}
               sx={{ mt: 1 }}
             >
-              <TextField
+                <TextField
                 margin="normal"
+                required
                 fullWidth
-                id="biography"
-                label="Biography"
-                name="biography"
+                id="name"
+                label="Gruppenavn"
+                name="name"
                 autoFocus
                 multiline={true}
               />
               <TextField
                 margin="normal"
                 fullWidth
+                id="biography"
+                label="Kort om gruppen"
+                name="biography"
+                multiline={true}
+              />
+              <TextField
+                margin="normal"
+                fullWidth
                 name="interesser"
-                label="interesser"
+                label="Interesser"
                 id="interesser"
               />
 
@@ -82,7 +91,7 @@ export default function EditGroupInfo() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Lagre
+                Opprett
               </Button>
               <Grid container></Grid>
             </Box>

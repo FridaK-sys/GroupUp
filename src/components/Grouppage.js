@@ -27,7 +27,7 @@ const theme = createTheme();
 
 const groups = ["Fotball", "Bil", "Matematikk", "Ridning"];
 const membernums = ['23', '21', '3', '1044'];
-const interests = ['spille fotball', 'skru bil', 'regne', 'Ri hest, ponny eller annet'];
+const interests = 'Lorem ipsum dolor sit amet. Qui quia quos ab enim nulla 33 consectetur delectus vel dolores cumque 33 dolorem iusto. Est velit explicabo ex ipsum nostrum quo animi exercitationem eos velit fugiat. Qui consequatur ipsa ut error explicabo aut dolore maiores. Non dolores sapiente sit dolorem est similique nobis aut sapiente reprehenderit. Est dolore nihil qui consequatur recusandae eos sapiente cumque ea impedit doloremque. Ut galisum assumenda ut laboriosam adipisci 33 velit obcaecati et asperiores corporis ut consequatur error eum excepturi iusto eum voluptatem tenetur. At sapiente eligendi sed culpa minus et mollitia dolorum et voluptatum obcaecati ut culpa doloribus et atque quia et voluptates ullam. Et deleniti corrupti aut officia fugiat ad quam commodi. Sit laboriosam commodi aut soluta quas ut blanditiis inventore qui nemo provident et tenetur laboriosam 33 Quis voluptate accusantium expedita. Est voluptatem voluptas ex blanditiis minus quo magni voluptatem aut repellat voluptatem. Sit fugit quia eum molestiae harum quo sunt laudantium.';
 const members = ['Ruben', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe'];
 const images = [Fotballimage, Bilimage, Matematikkimage, Ridningimage];
 
@@ -68,13 +68,13 @@ export default function Grouppage(props) {
         <MenuList />
 
         <div className='group' style={{ display: 'flex', width: '70vw', height: '70vh', padding: '5vw', margin: '10vw' }}>
-          <div className="pic-container" style={{position: 'absolute', top:'10vh', left: '20vw'}}>
+          <div className="pic-container" style={{position: 'absolute', top:'100px', left: '20vw'}}>
             <ReactRoundedImage image={images[groupID]} id="profilepic" />
             <Typography id="labels" style={{position: 'relative', left: '200px', bottom: '200px', fontSize:'40px'}}>
               @{groups[groupID]} {"\n"}{" "}
             </Typography>
           </div>
-          <div className='groupinfo' style={{position: 'absolute', left: '20vw'}}>
+          <div className='groupinfo' style={{position: 'absolute', left: '20vw', top: '320px'}}>
             <Button id='memberBox' onClick={openPopover} style={{fontSize:'22px'}}>
                 Antall medlemmer: {membernums[groupID]} {"\n"}{" "}
             </Button>
@@ -109,9 +109,9 @@ export default function Grouppage(props) {
               <EditGroupInfo />
             </div>
           </div>
-          <div className='bio' style={{minWidth: '50vw', maxHeight: '30vh',fontSize: '22px', position: 'relative', left: '5vw', bottom: '20vh', border: 'solid', borderWidth: '2px'}}>
-            <h1>Om gruppen</h1>
-            <h3>{interests[groupID]}</h3>
+          <div className='bio' style={{maxWidth: '40vw', maxHeight: '30vh',fontSize: '22px', position: 'absolute', left: '45vw', top: '100px'}}>
+            <h2>Interesser:</h2>
+            <h4>{interests}</h4>
           </div>
         </div>
       </Box>
