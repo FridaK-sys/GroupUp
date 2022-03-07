@@ -8,21 +8,26 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import GroupIcon from '@mui/icons-material/Group';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import { useNavigate } from 'react-router-dom';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import CreateNewGroup from './CreateNewGroup'
 
 export default function NestedList() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  const groups = ["Fotball", "Bil", "Matematikk", "Bading"];
+  const groups = ["Fotball", "Bil", "Matematikk", "Ridning"];
+
+  let navigate = useNavigate();
 
   return (
     <List
-      sx={{ width: '20%', maxWidth: 360, bgcolor: 'background.paper' }}
+      sx={{ width: '20%', bgcolor: 'background.paper', height: '100%'}}
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
@@ -47,11 +52,15 @@ export default function NestedList() {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {groups.map(group => {
+          <ListItem button key='createGroup' sx={{ml: 2}}>
+            <ListItemIcon><AddCircleOutlineIcon /></ListItemIcon>
+            <div id='creategroup'><CreateNewGroup /></div>
+          </ListItem>
+          {groups.map((name, index) => {
             return (
-            <ListItem button href={group.route} sx={{ pl: 4 }}>
-              <ListItemIcon><ArrowRightIcon /></ListItemIcon>
-              <ListItemText primary={group} />
+            <ListItem button key={index} onClick={() => navigate('/homepage/grouppage/' + index)} sx={{ pl: 4 }}>
+              <ListItemIcon><FiberManualRecordIcon /></ListItemIcon>
+              <ListItemText primary={name} />
             </ListItem>)
           })}
         </List>

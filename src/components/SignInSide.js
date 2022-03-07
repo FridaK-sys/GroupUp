@@ -39,7 +39,7 @@ import { useNavigate } from "react-router-dom";
 const theme = createTheme();
 
 export default function SignInSide() {
-  const navigate = React.useRef(useNavigate());
+  let navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -72,6 +72,7 @@ export default function SignInSide() {
     if (tokenLocal) {
       navigate("/homepage");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

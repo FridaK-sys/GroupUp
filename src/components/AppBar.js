@@ -95,7 +95,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profil</MenuItem>
+      <MenuItem onClick={() => {navigate("/userpage");}}>Profil</MenuItem>
       <MenuItem onClick={() => {
         window.localStorage.removeItem("token");
         window.sessionStorage.removeItem("token");
@@ -184,13 +184,14 @@ export default function PrimarySearchAppBar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Søk…"
               inputProps={{ 'aria-label': 'search' }}
               style={{marginLeft: '25%'}}
+              
               onKeyPress={(e) => {
-                if (e.key === "Enter" && StyledInputBase !== null && StyledInputBase !== "" ) {
-                  console.log(e.target.value);
-                  navigate("/homepage/search");                  
+                if (e.key === "Enter") {
+                  console.log(e.target.value);        
+                  navigate("/homepage/search?query=" + e.target.value);                  
                 }
               }}
             />
