@@ -32,6 +32,10 @@ const theme = createTheme();
 
 const groupImage = require("./../images/hest.png");
 
+const auth = firebase.auth();
+
+const [user] = useAuthState(auth);
+
 export default function Homepage() {
   let navigate = useNavigate();
 

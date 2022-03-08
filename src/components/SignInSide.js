@@ -18,6 +18,10 @@ import Alert from "@mui/material/Alert";
 import Collapse from "@mui/material/Collapse";
 import { useNavigate } from "react-router-dom";
 
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+const auth = getAuth();
+
 // function Copyright(props) {
 //   return (
 //     <Typography
@@ -57,6 +61,17 @@ export default function SignInSide() {
       window.sessionStorage.setItem("token", token);
     }
     navigate("/homepage");
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
   const [signInError, setSignInError] = React.useState("");
   const [signUpOpen, setSignUpOpen] = React.useState(false);

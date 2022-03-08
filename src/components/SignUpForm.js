@@ -12,7 +12,7 @@ import { addYears, isBefore } from "date-fns";
 import Alert from "@mui/material/Alert";
 import Collapse from "@mui/material/Collapse";
 import Link from "@mui/material/Link";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 export default function SignUpForm(props) {
   const [passwordError, setPasswordError] = React.useState("");
@@ -27,7 +27,7 @@ export default function SignUpForm(props) {
     let username = data.get("brukernavn");
     let fullName = data.get("fulltNavn");
     let intrests = data.get("interesser");
-    if(intrests === ""); // just to remove warning
+    if (intrests === ""); // just to remove warning
     let password1 = data.get("passord");
     let password2 = data.get("gjentaPassord");
     if (!username) {
@@ -36,12 +36,12 @@ export default function SignUpForm(props) {
     if (!fullName) {
       setNameError("Dette feltet kan ikke være tomt.");
     }
-    if(!password1) {
+    if (!password1) {
       setPasswordError("Dette feltet kan ikke være tomt.");
     }
     if (!birthDate) {
       setAgeError("Dette feltet kan ikke være tomt.");
-    } 
+    }
     if (password1 !== password2) {
       setPasswordError("Passordene må være like.");
     }
@@ -51,18 +51,24 @@ export default function SignUpForm(props) {
       console.log("not old enough");
       setAgeError("Brukere må være 18 år eller eldre.");
     }
-    // alert(
-    //   "brukernavn: " +
-    //     username +
-    //     ", fullt navn: " +
-    //     fullName +
-    //     ", interesser: " +
-    //     intrests +
-    //     ", passord: " +
-    //     password1 +
-    //     ", gjenta passord: " +
-    //     password2
-    // );
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        const userRef = db.collection("userInfo");
+        await userRef.add({
+          userId: user.uid,
+          username: username,
+          fullName: fullName,
+          interests: interests.split(", ")
+          //TODO fix age
+        })
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
   return (
     <Box
@@ -75,7 +81,7 @@ export default function SignUpForm(props) {
       }}
     >
       <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-        <AccountCircleOutlinedIcon/>
+        <AccountCircleOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
         Registrer deg
@@ -92,7 +98,7 @@ export default function SignUpForm(props) {
             onClose={() => {
               setUsernameError("");
             }}
-            style={{marginTop: "8px"}}
+            style={{ marginTop: "8px" }}
           >
             {usernameError}
           </Alert>
@@ -106,7 +112,9 @@ export default function SignUpForm(props) {
           name="brukernavn"
           error={usernameError !== ""}
           autoFocus
-          onChange={() => {setUsernameError("")}}
+          onChange={() => {
+            setUsernameError("");
+          }}
         />
         <Collapse in={nameError !== ""}>
           <Alert
@@ -114,7 +122,7 @@ export default function SignUpForm(props) {
             onClose={() => {
               setNameError("");
             }}
-            style={{marginTop: "8px"}}
+            style={{ marginTop: "8px" }}
           >
             {nameError}
           </Alert>
@@ -127,7 +135,9 @@ export default function SignUpForm(props) {
           label="Fullt navn"
           id="fulltNavn"
           error={nameError !== ""}
-          onChange={() => {setNameError("")}}
+          onChange={() => {
+            setNameError("");
+          }}
         />
         <TextField
           margin="normal"
@@ -142,7 +152,7 @@ export default function SignUpForm(props) {
             onClose={() => {
               setAgeError("");
             }}
-            style={{marginTop: "8px"}}
+            style={{ marginTop: "8px" }}
           >
             {ageError}
           </Alert>
@@ -156,7 +166,16 @@ export default function SignUpForm(props) {
               setAgeError("");
             }}
             renderInput={(params) => (
-              <TextField {...params} margin="normal" required fullWidth error={ageError !== ""} onChange={() => {setAgeError("");}}/>
+              <TextField
+                {...params}
+                margin="normal"
+                required
+                fullWidth
+                error={ageError !== ""}
+                onChange={() => {
+                  setAgeError("");
+                }}
+              />
             )}
           />
         </LocalizationProvider>
@@ -166,7 +185,7 @@ export default function SignUpForm(props) {
             onClose={() => {
               setPasswordError("");
             }}
-            style={{marginTop: "8px"}}
+            style={{ marginTop: "8px" }}
           >
             {passwordError}
           </Alert>
@@ -210,9 +229,9 @@ export default function SignUpForm(props) {
         <Grid container></Grid>
         <Grid item>
           <Link
-            style={{cursor: "pointer"}}
+            style={{ cursor: "pointer" }}
             variant="body2"
-            onClick={() => {  
+            onClick={() => {
               props.handleAbort();
             }}
           >
