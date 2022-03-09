@@ -8,14 +8,14 @@ import Grouppage from "./components/Grouppage";
 import "./App.css";
 
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+// import { getFirestore } from 'firebase/firestore';
+// import { getAuth } from 'firebase/auth';
 
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+// import { useAuthState } from 'react-firebase-hooks/auth';
+// import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-firebase.initializeApp({
+initializeApp({
   apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
   authDomain: "groupup-5ffe8.firebaseapp.com",
   databaseURL: "https://groupup-5ffe8-default-rtdb.europe-west1.firebasedatabase.app",
@@ -25,8 +25,8 @@ firebase.initializeApp({
   appId: "1:263112867766:web:9e823c8699eace63d44b17"
 })
 
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+// const auth = getAuth();
+// const firestore = getFirestore();
 
 function App() {
   return (

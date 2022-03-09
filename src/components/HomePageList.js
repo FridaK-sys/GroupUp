@@ -14,12 +14,18 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import CreateNewGroup from './CreateNewGroup'
 
-const auth = firebase.auth();
-const [user] = useAuthState(auth);
+import { getAuth } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getFirestore } from 'firebase/firestore';
 
-const groupsRef
+const auth = getAuth();
+const firestore = getFirestore();
+
 
 export default function NestedList() {
+  const [user] = useAuthState(auth);
+  // const groupsRef = firestore.collection('groups');
+  // const userRef = firestore.collection('userInfo').doc(user.uid);
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {

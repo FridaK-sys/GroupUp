@@ -14,8 +14,23 @@ import Collapse from "@mui/material/Collapse";
 import Link from "@mui/material/Link";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+
+initializeApp({
+  apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
+  authDomain: "groupup-5ffe8.firebaseapp.com",
+  databaseURL: "https://groupup-5ffe8-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "groupup-5ffe8",
+  storageBucket: "groupup-5ffe8.appspot.com",
+  messagingSenderId: "263112867766",
+  appId: "1:263112867766:web:9e823c8699eace63d44b17"
+})
 export default function SignUpForm(props) {
   const [passwordError, setPasswordError] = React.useState("");
+  const [emailError, setEmailError] = React.useState("");
   const [usernameError, setUsernameError] = React.useState("");
   const [nameError, setNameError] = React.useState("");
   const [ageError, setAgeError] = React.useState("");
@@ -25,9 +40,10 @@ export default function SignUpForm(props) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     let username = data.get("brukernavn");
+    let email = data.get("epost");
     let fullName = data.get("fulltNavn");
-    let intrests = data.get("interesser");
-    if (intrests === ""); // just to remove warning
+    let interests = data.get("interesser");
+    if (interests === ""); // just to remove warning
     let password1 = data.get("passord");
     let password2 = data.get("gjentaPassord");
     if (!username) {
@@ -51,25 +67,22 @@ export default function SignUpForm(props) {
       console.log("not old enough");
       setAgeError("Brukere må være 18 år eller eldre.");
     }
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(getAuth(), email, password1)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        const userRef = db.collection("userInfo");
-        await userRef.add({
+        const firestore = getFirestore();
+        //const userRef = firestore.collection("userInfo");
+        const docRef = addDoc(collection(firestore, "userInfo"), {
           userId: user.uid,
           username: username,
+          email: email,
           fullName: fullName,
           interests: interests.split(", ")
-          //TODO fix age
-        })
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-  };
+        });
+        console.log("Document writte with ID: ", docRef.id);
+  });
+}
   return (
     <Box
       sx={{
@@ -110,6 +123,19 @@ export default function SignUpForm(props) {
           id="brukernavn"
           label="Brukernavn"
           name="brukernavn"
+          error={usernameError !== ""}
+          autoFocus
+          onChange={() => {
+            setUsernameError("");
+          }}
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="epost"
+          label="Epost"
+          name="epost"
           error={usernameError !== ""}
           autoFocus
           onChange={() => {
