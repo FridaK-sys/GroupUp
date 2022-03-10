@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from "@mui/material/Avatar";
 
-export default function EditGroupInfo() {
+export default function EditGroupInfo({ bio, interest, handleBioChange, handleInterestChange }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -64,6 +64,8 @@ export default function EditGroupInfo() {
                 id="biography"
                 label="Biography"
                 name="biography"
+                value={bio}
+                onChange={handleBioChange}
                 autoFocus
                 multiline={true}
               />
@@ -73,6 +75,8 @@ export default function EditGroupInfo() {
                 name="interesser"
                 label="interesser"
                 id="interesser"
+                value={interest}
+                onChange={handleInterestChange}
               />
 
               

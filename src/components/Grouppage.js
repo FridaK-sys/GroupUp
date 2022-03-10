@@ -27,8 +27,7 @@ const theme = createTheme();
 
 const groups = ["Fotball", "Bil", "Matematikk", "Ridning"];
 const membernums = ['23', '21', '3', '1044'];
-const interests = 'Lorem ipsum dolor sit amet. Qui quia quos ab enim nulla 33 consectetur delectus vel dolores cumque 33 dolorem iusto. Est velit explicabo ex ipsum nostrum quo animi exercitationem eos velit fugiat. Qui consequatur ipsa ut error explicabo aut dolore maiores. Non dolores sapiente sit dolorem est similique nobis aut sapiente reprehenderit. Est dolore nihil qui consequatur recusandae eos sapiente cumque ea impedit doloremque. Ut galisum assumenda ut laboriosam adipisci 33 velit obcaecati et asperiores corporis ut consequatur error eum excepturi iusto eum voluptatem tenetur. At sapiente eligendi sed culpa minus et mollitia dolorum et voluptatum obcaecati ut culpa doloribus et atque quia et voluptates ullam. Et deleniti corrupti aut officia fugiat ad quam commodi. Sit laboriosam commodi aut soluta quas ut blanditiis inventore qui nemo provident et tenetur laboriosam 33 Quis voluptate accusantium expedita. Est voluptatem voluptas ex blanditiis minus quo magni voluptatem aut repellat voluptatem. Sit fugit quia eum molestiae harum quo sunt laudantium.';
-const members = ['Ruben', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe'];
+const members = ['Ruben', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes', 'Frida', 'Hallvard', 'Stefan', 'Vilde', 'Tor', 'Leif Einar Lothe', 'Johannes'];
 const images = [Fotballimage, Bilimage, Matematikkimage, Ridningimage];
 
 export default function Grouppage(props) {
@@ -56,6 +55,18 @@ export default function Grouppage(props) {
     setGroupID(getID());
   }, [navigate])
 
+  let [bio, setBio] = React.useState("");
+  bio = 'Lorem ipsum dolor sit amet. Qui quia quos ab enim nulla 33 consectetur delectus vel dolores cumque 33 dolorem iusto. Est velit explicabo ex ipsum nostrum quo animi exercitationem eos velit fugiat.';
+  const handleBioChange = e => {
+    setBio(e.target.value);
+  }
+
+  let [interest, setInterest] = React.useState("");
+  interest = 'Fotball og sånt';
+  const handleInterestChange = e => {
+    setInterest(e.target.value);
+  }
+
   // const location = useLocation();
   return (
     <ThemeProvider theme={theme}>
@@ -72,7 +83,7 @@ export default function Grouppage(props) {
           <div className="pic-container" style={{position: 'relative', top:'90px', left: '-10vw'}}>
             <ReactRoundedImage image={images[groupID]} id="profilepic" />
             <Typography id="labels" 
-            style={{position: 'relative', left: '200px', bottom: '200px', fontSize:'40px'}}
+            style={{position: 'relative', left: '200px', bottom: '200px', fontSize:'40px', color: 'white'}}
             >
               @{groups[groupID]} {"\n"}{" "}
             </Typography>
@@ -109,12 +120,17 @@ export default function Grouppage(props) {
               </List>
             </Popover>
             <div className="edit-btn" style={{top: "50px", left: "2vW"}}>
-              <EditGroupInfo />
+              <EditGroupInfo 
+              bio={bio} 
+              interest={interest} 
+              handleInterestChange={handleInterestChange}
+              handleBioChange={handleBioChange}
+              />
             </div>
           </div>
           <div className='bio' style={{maxWidth: '40vw', maxHeight: '30vh',fontSize: '22px', position: 'absolute', left: '45vw', top: '100px'}}>
-            <h2>Interesser:</h2>
-            <h4>{interests}</h4>
+            <h2>Bio:</h2>
+            <h4>{bio}</h4>
           </div>
         {/* </div> */}
         </Box>
