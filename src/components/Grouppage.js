@@ -22,6 +22,7 @@ import Bilimage from './../images/Bil.png';
 import Ridningimage from './../images/Ridning.png';
 import Fotballimage from './../images/Fotball.png';
 import Matematikkimage from './../images/Matematikk.png';
+import AddMember from './AddMember'
 
 const theme = createTheme();
 
@@ -39,14 +40,14 @@ export default function Grouppage(props) {
     setAnchor(event.currentTarget);
   }
   //Popover
-  
+
   const [groupID, setGroupID] = useState(null);
 
   const getID = () => {
     let path = window.location.pathname;
     let id = path.split('/')[path.split('/').length - 1];
     return id;
-  } 
+  }
   React.useEffect(() => {
     setGroupID(getID());
   }, [])
@@ -55,14 +56,12 @@ export default function Grouppage(props) {
     setGroupID(getID());
   }, [navigate])
 
-  let [bio, setBio] = React.useState("");
-  bio = 'Lorem ipsum dolor sit amet. Qui quia quos ab enim nulla 33 consectetur delectus vel dolores cumque 33 dolorem iusto. Est velit explicabo ex ipsum nostrum quo animi exercitationem eos velit fugiat.';
+  let [bio, setBio] = React.useState("Fortell om gruppen!");
   const handleBioChange = e => {
     setBio(e.target.value);
   }
 
-  let [interest, setInterest] = React.useState("");
-  interest = 'Fotball og sånt';
+  let [interest, setInterest] = React.useState("Hva er gruppens interesser?");
   const handleInterestChange = e => {
     setInterest(e.target.value);
   }
@@ -75,67 +74,82 @@ export default function Grouppage(props) {
         <AppBar></AppBar>
       </Box>
       <main style={{ display: "flex" }}>
-      <MenuList />
-      <Box style={{ width: "65%" }}>
+        <MenuList />
+        <Typography id="labels"
+          style={{
+            position: 'relative',
+            left: '28vw',
+            top: '-6vh',
+            fontSize: '40px',
+            color: 'white'
+          }}
+        >
+          @{groups[groupID]} {"\n"}{" "}
+        </Typography>
         {/* Hero unit */}
         <Box style={{ width: "65%" }}>
-        {/* <div className='group' style={{ display: 'flex', width: '70vw', height: '70vh'}}> */}
-          <div className="pic-container" style={{position: 'relative', top:'90px', left: '-10vw'}}>
-            <ReactRoundedImage image={images[groupID]} id="profilepic" />
-            <Typography id="labels" 
-            style={{position: 'relative', left: '200px', bottom: '200px', fontSize:'40px', color: 'white'}}
-            >
-              @{groups[groupID]} {"\n"}{" "}
-            </Typography>
-          </div>
-          <div className='groupinfo' style={{position: 'absolute', left: '20vw', top: '450px'}}>
-            <Button id='memberBox' onClick={openPopover} style={{fontSize:'22px'}}>
-                Antall medlemmer: {membernums[groupID]} {"\n"}{" "}
-            </Button>
-            <Popover 
-            open={Boolean(anchor)} 
-            anchorEl={anchor}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            transformOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left'
-            }}
+          {/* <div className='group' style={{ display: 'flex', width: '70vw', height: '70vh'}}> */}
+
+          <div className='groupinfo'
             style={{
-              top: '20vh',
-              left: '12vw',
-            }}
-            onClose={() => setAnchor(null)}
+              position: 'absolute',
+              left: '21vw',
+              top: '10vh',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+            <ReactRoundedImage image={images[groupID]} id="profilepic"/>
+            <Button id='memberBox' onClick={openPopover} style={{ fontSize: '22px' }}>
+              Antall medlemmer: {membernums[groupID]} {"\n"}{" "}
+            </Button>
+            <Popover
+              open={Boolean(anchor)}
+              anchorEl={anchor}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left'
+              }}
+              style={{
+                top: '20vh',
+                left: '12vw',
+              }}
+              onClose={() => setAnchor(null)}
             >
-              <List component="div" style={{maxHeight: '50vh', minWidth: '20vw', alignContent: 'center'}} disablePadding>
+              <List component="div" style={{ maxHeight: '50vh', minWidth: '20vw', alignContent: 'center' }} disablePadding>
                 {members.map((name, index) => {
                   return (
                     <ListItem button key={index} onClick={() => navigate('/homepage')}>
-                      <ListItemIcon><img alt="of stuff" src={images[groupID]} style={{height: '60px'}}/></ListItemIcon>
-                      <ListItemText primaryTypographyProps={{fontSize: '22px'}} primary={name}/>
+                      <ListItemIcon><img alt="of stuff" src={images[groupID]} style={{ height: '60px' }} /></ListItemIcon>
+                      <ListItemText primaryTypographyProps={{ fontSize: '22px' }} primary={name} />
                     </ListItem>)
                 })}
               </List>
             </Popover>
-            <div className="edit-btn" style={{top: "50px", left: "2vW"}}>
-              <EditGroupInfo 
-              bio={bio} 
-              interest={interest} 
+
+            <Button variant="contained" sx={{ mt: 0.5, mb: 0.5 }}>
+              + Bli medlem
+            </Button>
+            <AddMember />
+            <EditGroupInfo
+              bio={bio}
+              interest={interest}
               handleInterestChange={handleInterestChange}
               handleBioChange={handleBioChange}
-              />
-            </div>
+            />
+            <Typography>{interest}</Typography>
           </div>
-          <div className='bio' style={{maxWidth: '40vw', maxHeight: '30vh',fontSize: '22px', position: 'absolute', left: '45vw', top: '100px'}}>
+          <div className='bio' style={{ maxWidth: '40vw', maxHeight: '30vh', fontSize: '22px', position: 'absolute', left: '45vw', top: '100px' }}>
             <h2>Bio:</h2>
             <h4>{bio}</h4>
           </div>
-        {/* </div> */}
+          {/* </div> */}
         </Box>
-      </Box>
-      {/* <Footer /> */}
+        {/* <Footer /> */}
       </main>
     </ThemeProvider>
   );

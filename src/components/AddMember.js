@@ -9,15 +9,21 @@ import Paper from "@mui/material/Paper";
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from "@mui/material/Avatar";
 
-export default function EditGroupInfo({ bio, interest, handleBioChange, handleInterestChange }) {
+export default function AddMember() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [name, setName] = React.useState("");
+
+  const handleNameChange = e => {
+      setName(e.target.value);
+  }
+
   return (
     <div>
-      <Button variant="contained" sx={{ mt: 0.5, mb: 0.5, width: '100%' }} onClick={handleOpen}>
-        Rediger gruppe
+      <Button variant="contained" sx={{ mt: 0.5, mb: 0.5, width: '100%'}} onClick={handleOpen}>
+      + Legg til medlem
       </Button>
       <Modal
         open={open}
@@ -54,38 +60,29 @@ export default function EditGroupInfo({ bio, interest, handleBioChange, handleIn
             </Typography>
             <Box
               component="form"
-              
+              noValidate
+              //onSubmit={handleRegister}
               sx={{ mt: 1 }}
             >
               <TextField
                 margin="normal"
                 fullWidth
-                id="biography"
-                label="Biography"
-                name="biography"
-                value={bio}
-                onChange={handleBioChange}
+                id="brukernavn"
+                label="Brukernavn"
+                name="brukernavn"
+                value={name}
+                onChange={handleNameChange}
                 autoFocus
                 multiline={true}
               />
-              <TextField
-                margin="normal"
-                fullWidth
-                name="interesser"
-                label="interesser"
-                id="interesser"
-                value={interest}
-                onChange={handleInterestChange}
-              />
 
-              
               <Button
-                onClick={handleClose}
+                type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Lagre
+                Legg til
               </Button>
               <Grid container></Grid>
             </Box>
