@@ -5,6 +5,8 @@ import Homepage from "./components/Homepage"
 import Searchresult from "./components/Searchresult"
 import UserProfile from "./components/UserPage";
 import Grouppage from "./components/Grouppage";
+import Chat from "./components/chat";
+import ChatPage from "./components/chatPage";
 import "./App.css";
 
 function App() {
@@ -12,6 +14,8 @@ function App() {
     <div className="App" style={{ width: "100vw", height: "100vh" }}>
       <Routes>
         <Route path="/homepage/grouppage/:id" element={<Grouppage />} />
+        <Route path="/chat/:id" element={<ChatPage />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="/userpage" element={<UserProfile />} />
         <Route path="/homepage/search" element={<Searchresult />} />
         <Route path="/homepage" element={<Homepage />} />
