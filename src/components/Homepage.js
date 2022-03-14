@@ -77,7 +77,6 @@ export default function Homepage() {
         <Box style={{ width: "65%" }}>
           <Box
             sx={{
-              bgcolor: "background.paper",
               pt: 8,
               pb: 6,
             }}

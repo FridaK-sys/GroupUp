@@ -129,6 +129,16 @@ export default function Grouppage(props) {
     setGroupID(getID());
   }, [navigate]);
 
+  let [bio, setBio] = React.useState("Fortell om gruppen!");
+  const handleBioChange = e => {
+    setBio(e.target.value);
+  }
+
+  let [interest, setInterest] = React.useState("Hva er gruppens interesser?");
+  const handleInterestChange = e => {
+    setInterest(e.target.value);
+  }
+
   // const location = useLocation();
   return (
     <ThemeProvider theme={theme}>
