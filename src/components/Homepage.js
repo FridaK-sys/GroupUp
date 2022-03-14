@@ -14,8 +14,14 @@ import MenuList from "./HomePageList";
 import { useNavigate } from "react-router-dom";
 
 import { getAuth } from "firebase/auth";
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import { useAuthState } from "react-firebase-hooks/auth";
+import {
+  getFirestore,
+  query,
+  where,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 
 function Copyright() {
   return (
@@ -39,31 +45,25 @@ const groupImage = require("./../images/hest.png");
 const auth = getAuth();
 const firestore = getFirestore();
 
+async function getGroup(user, setGroups, groups) {
+  console.log("Homepage");
+
+  console.log(groups);
+}
+
+//hasDone = true;
 
 export default function Homepage() {
   const [user] = useAuthState(auth);
   let navigate = useNavigate();
-  let [groups, setGroups] = React.useState([]);
-
+  const [groups, setGroups] = React.useState([]);
   React.useEffect(() => {
     let tokenSession = window.sessionStorage.getItem("token");
     let tokenLocal = window.localStorage.getItem("token");
     if (!tokenSession && !tokenLocal) {
       navigate("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  
-  const querySnapshot = getDocs(collection(firestore, "userInfo"))
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        if (doc.data().userId === user.uid) {
-          setGroups(doc.data().fullName);
-        }
-    })});
-  
-
 
   return (
     <ThemeProvider theme={theme}>
