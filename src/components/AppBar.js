@@ -20,6 +20,23 @@ import Logo from './../images/logo.png'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 
+import CssBaseline from '@mui/material/CssBaseline';
+import MenuList from './HomePageList'
+import { useState } from 'react';
+import Popover from '@mui/material/Popover';
+import Button from '@mui/material/Button';
+
+import List from '@mui/material/List';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
+import Bilimage from './../images/Bil.png';
+import Ridningimage from './../images/Ridning.png';
+import Fotballimage from './../images/Fotball.png';
+import Matematikkimage from './../images/Matematikk.png';
+import AddMember from './AddMember'
+import Invite from './Invite'
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -84,6 +101,13 @@ export default function PrimarySearchAppBar() {
 //   const handleMobileMenuOpen = (event) => {
 //     setMobileMoreAnchorEl(event.currentTarget);
 //   };
+
+ //Popover
+ const [anchor, setAnchor] = React.useState(null);
+ const openPopover = (event) => {
+   setAnchor(event.currentTarget);
+ }
+ //Popover
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -198,20 +222,12 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick = {openPopover}>
               <Badge badgeContent={1} color="error">
                 <MailIcon /> 
               </Badge> 
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={1} color="error"> 
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+      
             <IconButton
               size="large"
               edge="end"
@@ -223,7 +239,30 @@ export default function PrimarySearchAppBar() {
             >
               <AccountCircle />
             </IconButton>
+            <Invite></Invite>
           </Box>
+
+          <Popover
+              open={Boolean(anchor)}
+              anchorEl={anchor}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left'
+              }}
+              style={{
+                top: '20vh',
+                left: '12vw',
+              }}
+              onClose={() => setAnchor(null)}
+            >
+    
+            </Popover>
+
+
           {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
