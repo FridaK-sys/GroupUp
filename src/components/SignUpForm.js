@@ -30,7 +30,7 @@ initializeApp({
 })
 export default function SignUpForm(props) {
   const [passwordError, setPasswordError] = React.useState("");
-  const [emailError, setEmailError] = React.useState("");
+  // const [emailError, setEmailError] = React.useState("");
   const [usernameError, setUsernameError] = React.useState("");
   const [nameError, setNameError] = React.useState("");
   const [ageError, setAgeError] = React.useState("");
@@ -46,32 +46,32 @@ export default function SignUpForm(props) {
     if (interests === ""); // just to remove warning
     let password1 = data.get("passord");
     let password2 = data.get("gjentaPassord");
-    let error = false;
+    // let error = false;
     if (!username) {
       setUsernameError("Dette feltet kan ikke være tomt.");
-      error = true;
+      // error = true;
     }
     if (!fullName) {
       setNameError("Dette feltet kan ikke være tomt.");
-      error = true;
+      // error = true;
     }
     if (!password1) {
       setPasswordError("Dette feltet kan ikke være tomt.");
-      error = true;
+      // error = true;
     }
     if (!birthDate) {
       setAgeError("Dette feltet kan ikke være tomt.");
     }
     if (password1 !== password2) {
       setPasswordError("Passordene må være like.");
-      error = true;
+      // error = true;
     }
     if (isBefore(birthDate, addYears(new Date(), -18))) {
       console.log("old enough: " + birthDate);
     } else {
       console.log("not old enough");
       setAgeError("Brukere må være 18 år eller eldre.");
-      error = true;
+      // error = true;
     }
     createUserWithEmailAndPassword(getAuth(), email, password1)
       .then((userCredential) => {

@@ -13,15 +13,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuList from "./HomePageList";
 import { useNavigate } from "react-router-dom";
 
-import { getAuth } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import {
-  getFirestore,
-  query,
-  where,
-  collection,
-  getDocs,
-} from "firebase/firestore";
 
 function Copyright() {
   return (
@@ -42,28 +33,19 @@ const theme = createTheme();
 
 const groupImage = require("./../images/hest.png");
 
-const auth = getAuth();
-const firestore = getFirestore();
 
-async function getGroup(user, setGroups, groups) {
-  console.log("Homepage");
-
-  console.log(groups);
-}
 
 //hasDone = true;
 
 export default function Homepage() {
-  const [user] = useAuthState(auth);
   let navigate = useNavigate();
-  const [groups, setGroups] = React.useState([]);
   React.useEffect(() => {
     let tokenSession = window.sessionStorage.getItem("token");
     let tokenLocal = window.localStorage.getItem("token");
     if (!tokenSession && !tokenLocal) {
       navigate("/");
     }
-  }, []);
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,7 +71,7 @@ export default function Homepage() {
                 color="primary.dark"
                 gutterBottom
               >
-                GroupUp {groups}
+                GroupUp 
               </Typography>
             </Container>
           </Box>

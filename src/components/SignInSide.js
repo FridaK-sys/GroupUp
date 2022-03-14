@@ -78,12 +78,9 @@ export default function SignInSide() {
     signInWithEmailAndPassword(auth, data.get("brukernavn"), data.get("passord"))
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
       });
   };
   const [signInError, setSignInError] = React.useState("");

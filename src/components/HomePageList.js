@@ -34,7 +34,6 @@ export default function NestedList() {
     setOpen(!open);
   };
 
-  const groupsC = ["Fotball", "Bil", "Matematikk", "Ridning"];
 
   let navigate = useNavigate();
 
@@ -59,7 +58,7 @@ export default function NestedList() {
       console.log("Stopped ", groups);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     });
-  }, []);
+  });
 
   return (
     <List
