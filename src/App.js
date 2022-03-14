@@ -7,6 +7,27 @@ import UserProfile from "./components/UserPage";
 import Grouppage from "./components/Grouppage";
 import "./App.css";
 
+
+import { initializeApp } from 'firebase/app';
+// import { getFirestore } from 'firebase/firestore';
+// import { getAuth } from 'firebase/auth';
+
+// import { useAuthState } from 'react-firebase-hooks/auth';
+// import { useCollectionData } from 'react-firebase-hooks/firestore';
+
+initializeApp({
+  apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
+  authDomain: "groupup-5ffe8.firebaseapp.com",
+  databaseURL: "https://groupup-5ffe8-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "groupup-5ffe8",
+  storageBucket: "groupup-5ffe8.appspot.com",
+  messagingSenderId: "263112867766",
+  appId: "1:263112867766:web:9e823c8699eace63d44b17"
+})
+
+// const auth = getAuth();
+// const firestore = getFirestore();
+
 function App() {
   return (
     <div className="App" style={{ width: "100vw", height: "100vh" }}>

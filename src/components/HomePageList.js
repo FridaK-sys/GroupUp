@@ -14,16 +14,51 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import CreateNewGroup from './CreateNewGroup'
 
+import { getAuth } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getFirestore, query, where, collection, getDocs } from 'firebase/firestore';
+
+const auth = getAuth();
+const firestore = getFirestore();
+
+
 export default function NestedList() {
+
+  const [groups, setGroups] = React.useState([]);
+
+  const [user] = useAuthState(auth);
   const [open, setOpen] = React.useState(false);
+
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  const groups = ["Fotball", "Bil", "Matematikk", "Ridning"];
 
   let navigate = useNavigate();
+
+  React.useEffect(() => {
+
+    const groupsRef = collection(firestore, "groups");
+    const gq = query(
+      groupsRef,
+      where("users", "array-contains-any", [user.uid])
+    );
+    console.log("Spam");
+    getDocs(gq).then((docs) => {
+      console.log("Started");
+      let allGroups = []
+      docs.forEach((doc) => {
+        allGroups.push(doc.data().name); 
+        //setGroups(groupsSum);
+        console.log("Generating, ", groups)
+
+      });
+      setGroups(allGroups)
+      console.log("Stopped ", groups);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    });
+  });
 
   return (
     <List
@@ -56,13 +91,16 @@ export default function NestedList() {
             <ListItemIcon><AddCircleOutlineIcon /></ListItemIcon>
             <div id='creategroup'><CreateNewGroup /></div>
           </ListItem>
-          {groups.map((name, index) => {
+          {Array.from(groups).map((name, index) => {
+            console.log("Rendering ", name);
+            console.log("Groups in render, ", groups);
             return (
-            <ListItem button key={index} onClick={() => navigate('/homepage/grouppage/' + index)} sx={{ pl: 4 }}>
+            <ListItem button key={index} onClick={() => navigate('/homepage/grouppage/' + name)} sx={{ pl: 4 }}>
               <ListItemIcon><FiberManualRecordIcon /></ListItemIcon>
               <ListItemText primary={name} />
             </ListItem>)
           })}
+         
         </List>
       </Collapse>
     </List>
