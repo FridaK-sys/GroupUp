@@ -22,8 +22,8 @@ export default function Invite() {
 
   return (
     <div>
-      <Button variant="contained" sx={{ mt: 0.5, mb: 0.5, width: '100%'}} onClick={handleOpen}>
-      + Legg til medlem
+      <Button variant="contained" sx={{ mt: 0.5, mb: 0.5, ml: 2, width: '100%', right: '1vw'}} onClick={handleOpen}>
+        Invitasjoner
       </Button>
       <Modal
         open={open}
@@ -56,7 +56,7 @@ export default function Invite() {
               <EditIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Rediger info
+              Mine Invitasjoner
             </Typography>
             <Box
               component="form"
@@ -75,20 +75,13 @@ export default function Invite() {
                 autoFocus
                 multiline={true}
               />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Invitasjoner
-              </Button>
               <Grid container></Grid>
             </Box>
           </Box>
         </Grid>
       </Modal>
     </div>
+    
   );
+  //lsdjhlkdslsdjflkdslkdsljdsljvlskdjvlksjvdlkjdsvlksjvdlkvlkjvdslkjvdslklkvdsj
 }
