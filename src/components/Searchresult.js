@@ -68,7 +68,6 @@ export default function Grouppage() {
         <Box style={{ width: "65%" }}>
           <Box
             sx={{
-              bgcolor: "background.paper",
               pt: 8,
               pb: 6,
             }}
@@ -113,7 +112,7 @@ export default function Grouppage() {
         </Box>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+      <Box sx={{p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
           GroupUp
         </Typography>
