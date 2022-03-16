@@ -87,10 +87,10 @@ export default function Invite() {
               {invites.map((name, index) => {
                 return (
                   <ListItem button key={index} style={{ display: "flex", flexDirection: "row" }}>
-                   <Button variant="contained" sx={{ ml: 2, width: '100%', right: '1vw' }} onClick={handleOpen}>
+                   <Button variant="contained" sx={{ ml: 2, width: '100%', right: '1vw' }} onClick={handleClose}>
                       Avslå
                     </Button>
-                    <Button variant="contained" sx={{ ml: 2, width: '100%', right: '1vw' }} onClick={handleOpen}>
+                    <Button variant="contained" sx={{ ml: 2, width: '100%', right: '1vw' }} onClick={handleClose}>
                       Godta
                     </Button>
                   </ListItem>)
