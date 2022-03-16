@@ -38,26 +38,24 @@ export default function NestedList() {
   let navigate = useNavigate();
 
   React.useEffect(() => {
+    let isMounted = true;
 
     const groupsRef = collection(firestore, "groups");
     const gq = query(
       groupsRef,
       where("users", "array-contains-any", [user.uid])
     );
-    console.log("Spam");
     getDocs(gq).then((docs) => {
-      console.log("Started");
       let allGroups = []
       docs.forEach((doc) => {
         allGroups.push(doc.data().name); 
         //setGroups(groupsSum);
-        console.log("Generating, ", groups)
 
       });
-      setGroups(allGroups)
-      console.log("Stopped ", groups);
+      if (isMounted) setGroups(allGroups);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     });
+    return () => { isMounted = false };
   });
 
   return (
@@ -92,8 +90,6 @@ export default function NestedList() {
             <div id='creategroup'><CreateNewGroup /></div>
           </ListItem>
           {Array.from(groups).map((name, index) => {
-            console.log("Rendering ", name);
-            console.log("Groups in render, ", groups);
             return (
             <ListItem button key={index} onClick={() => navigate('/homepage/grouppage/' + name)} sx={{ pl: 4 }}>
               <ListItemIcon><FiberManualRecordIcon /></ListItemIcon>
