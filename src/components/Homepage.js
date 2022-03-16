@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuList from "./HomePageList";
 import { useNavigate } from "react-router-dom";
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -32,17 +33,19 @@ const theme = createTheme();
 
 const groupImage = require("./../images/hest.png");
 
+
+
+//hasDone = true;
+
 export default function Homepage() {
   let navigate = useNavigate();
-
   React.useEffect(() => {
     let tokenSession = window.sessionStorage.getItem("token");
     let tokenLocal = window.localStorage.getItem("token");
     if (!tokenSession && !tokenLocal) {
       navigate("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -56,7 +59,6 @@ export default function Homepage() {
         <Box style={{ width: "65%" }}>
           <Box
             sx={{
-              bgcolor: "background.paper",
               pt: 8,
               pb: 6,
             }}
@@ -69,7 +71,7 @@ export default function Homepage() {
                 color="primary.dark"
                 gutterBottom
               >
-                GroupUp
+                GroupUp 
               </Typography>
             </Container>
           </Box>

@@ -18,6 +18,23 @@ import Alert from "@mui/material/Alert";
 import Collapse from "@mui/material/Collapse";
 import { useNavigate } from "react-router-dom";
 
+import { initializeApp } from 'firebase/app';
+import { getAuth} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+initializeApp({
+  apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
+  authDomain: "groupup-5ffe8.firebaseapp.com",
+  databaseURL: "https://groupup-5ffe8-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "groupup-5ffe8",
+  storageBucket: "groupup-5ffe8.appspot.com",
+  messagingSenderId: "263112867766",
+  appId: "1:263112867766:web:9e823c8699eace63d44b17"
+})
+
+
+const auth = getAuth();
+
 // function Copyright(props) {
 //   return (
 //     <Typography
@@ -57,6 +74,14 @@ export default function SignInSide() {
       window.sessionStorage.setItem("token", token);
     }
     navigate("/homepage");
+
+    signInWithEmailAndPassword(auth, data.get("brukernavn"), data.get("passord"))
+      .then((userCredential) => {
+        // Signed in
+        // ...
+      })
+      .catch((error) => {
+      });
   };
   const [signInError, setSignInError] = React.useState("");
   const [signUpOpen, setSignUpOpen] = React.useState(false);
