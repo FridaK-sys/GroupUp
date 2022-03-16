@@ -18,16 +18,11 @@ export default function Invite() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [name, setName] = React.useState("");
 
   //Hente grupper fra databasen
   const invites = ["Fotball", "Bil", "Matematikk", "Ridning", "Fotball", "Bil", "Matematikk", "Ridning", "Fotball", "Bil", "Matematikk", "Ridning"];
 
   let navigate = useNavigate();
-
-  const handleNameChange = e => {
-      setName(e.target.value);
-  }
 
   return (
     <div>

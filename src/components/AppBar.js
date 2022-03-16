@@ -14,27 +14,10 @@ import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-// import MoreIcon from '@mui/icons-material/MoreVert';
 import Logo from './../images/logo.png'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
-
-import CssBaseline from '@mui/material/CssBaseline';
-import MenuList from './HomePageList'
-import { useState } from 'react';
 import Popover from '@mui/material/Popover';
-import Button from '@mui/material/Button';
-
-import List from '@mui/material/List';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
-import Bilimage from './../images/Bil.png';
-import Ridningimage from './../images/Ridning.png';
-import Fotballimage from './../images/Fotball.png';
-import Matematikkimage from './../images/Matematikk.png';
-import AddMember from './AddMember'
 import Invite from './Invite'
 
 const Search = styled('div')(({ theme }) => ({
