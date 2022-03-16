@@ -14,13 +14,13 @@ import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import Logo from "./../images/logo.png";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { Popover } from "@mui/material";
+import Invite from "./Invite";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -337,15 +337,7 @@ export default function PrimarySearchAppBar() {
                 <MailIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={1} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <Invite></Invite>
             <IconButton
               size="large"
               edge="end"
