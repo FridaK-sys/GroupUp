@@ -22,6 +22,7 @@ import Bilimage from "./../images/Bil.png";
 import Ridningimage from "./../images/Ridning.png";
 import Fotballimage from "./../images/Fotball.png";
 import Matematikkimage from "./../images/Matematikk.png";
+import AddMember from './AddMember';
 
 const theme = createTheme();
 
@@ -229,6 +230,10 @@ export default function Grouppage(props) {
                   })}
                 </List>
               </Popover>
+              <Button variant="contained" sx={{ mt: 0.5, mb: 0.5 }}>
+                + Bli medlem
+              </Button>
+              <AddMember />
               <div className="edit-btn" style={{ top: "50px", left: "2vW" }}>
                 <EditGroupInfo />
               </div>
