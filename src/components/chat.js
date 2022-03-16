@@ -12,6 +12,7 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuList from "./HomePageList";
 import { useNavigate } from "react-router-dom";
+import { v1 as uuidv1 } from 'uuid';
 
 function Copyright() {
     return (
@@ -31,6 +32,9 @@ function Copyright() {
   const theme = createTheme();
   
   const groupImage = require("./../images/hest.png");
+
+  const id = uuidv1();
+
 
 export default function Chat() {
   let navigate = useNavigate();
@@ -87,9 +91,12 @@ export default function Chat() {
               {cards.map((card) => (
                 <Grid item key={card} xs={12} sm={6} md={4}>
                   <Card
+                      onClick={() => navigate('/chat/'+ id)}
+                  /*
                     onClick={() => {
                       alert("klikk");
                     }}
+                    */
                     style={{ cursor: "pointer", border: "2px solid" }}
                     variant="outlined"
                     sx={{ bgcolor: "text.main", p: 1 }}
