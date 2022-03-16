@@ -98,13 +98,13 @@ export default function PrimarySearchAppBar() {
   const handleSearch = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    let query = data.get("søkeord");
+    let query = data.get("navn");
     let intrests = data.get("interesser");
     let location = data.get("lokasjon");
     let minSize = data.get("min");
     let maxSize = data.get("max");
     navigate("/homepage/search?query=" + query + 
-            "&intrests=" + intrests + 
+            "&interests=" + intrests + 
             "&location=" + location +
             "&minSize=" + minSize +
             "&maxSize=" + maxSize);
@@ -179,9 +179,9 @@ export default function PrimarySearchAppBar() {
         <TextField
           margin="normal"
           fullWidth
-          id="søkeord"
-          label="Søkeord"
-          name="søkeord"
+          id="navn"
+          label="Navn"
+          name="Navn"
           autoFocus
         />
         <TextField
@@ -283,7 +283,6 @@ export default function PrimarySearchAppBar() {
               inputProps={{ "aria-label": "search" }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
-                  console.log(e.target.value);
                   navigate("/homepage/search?query=" + e.target.value);
                 }
               }}
