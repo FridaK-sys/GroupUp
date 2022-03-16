@@ -8,6 +8,11 @@ import { Grid } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from "@mui/material/Avatar";
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { useNavigate } from 'react-router-dom';
 
 export default function Invite() {
   const [open, setOpen] = React.useState(false);
@@ -15,6 +20,11 @@ export default function Invite() {
   const handleClose = () => setOpen(false);
 
   const [name, setName] = React.useState("");
+
+  //Hente grupper fra databasen
+  const invites = ["Fotball", "Bil", "Matematikk", "Ridning", "Fotball", "Bil", "Matematikk", "Ridning", "Fotball", "Bil", "Matematikk", "Ridning"];
+
+  let navigate = useNavigate();
 
   const handleNameChange = e => {
       setName(e.target.value);
@@ -25,7 +35,7 @@ export default function Invite() {
       <Button variant="contained" sx={{ mt: 0.5, mb: 0.5, ml: 2, width: '100%', right: '1vw'}} onClick={handleOpen}>
         Invitasjoner
       </Button>
-      <Modal
+      <Modal style = {{overflow: 'auto', maxHeight: '50%', maxWidth: '40%', left: '58%', top: '9.5%'}}
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -43,10 +53,9 @@ export default function Invite() {
           elevation={6}
           square
         >
-          <Box
+          <Box 
             sx={{
-              my: 8,
-              mx: 4,
+            mx: 4,
               display: "flex",
               flexDirection: "column",
               alignItems: "center"
@@ -64,17 +73,30 @@ export default function Invite() {
               //onSubmit={handleRegister}
               sx={{ mt: 1 }}
             >
-              <TextField
-                margin="normal"
-                fullWidth
-                id="brukernavn"
-                label="Brukernavn"
-                name="brukernavn"
-                value={name}
-                onChange={handleNameChange}
-                autoFocus
-                multiline={true}
-              />
+              <div style={{ display: "flex", flexDirection: "row" }}>
+             <Box>
+              {invites.map((name, index) => {
+                return (
+                  <ListItem button key={index}>
+                    <ListItemIcon><FiberManualRecordIcon /></ListItemIcon>
+                    <ListItemText sx ={{ mr: 10, position: "relative", right: "1vw", mb: 0.75, mt: 0.75, pl: 4 }} primary={name} onClick={() => { navigate('/homepage/grouppage/' + index); handleClose() }}/>
+                  </ListItem>)
+              })} 
+              </Box>
+              <Box>
+              {invites.map((name, index) => {
+                return (
+                  <ListItem button key={index} style={{ display: "flex", flexDirection: "row" }}>
+                   <Button variant="contained" sx={{ ml: 2, width: '100%', right: '1vw' }} onClick={handleOpen}>
+                      Avslå
+                    </Button>
+                    <Button variant="contained" sx={{ ml: 2, width: '100%', right: '1vw' }} onClick={handleOpen}>
+                      Godta
+                    </Button>
+                  </ListItem>)
+              })} 
+              </Box>
+              </div>
               <Grid container></Grid>
             </Box>
           </Box>
@@ -83,5 +105,4 @@ export default function Invite() {
     </div>
     
   );
-  //lsdjhlkdslsdjflkdslkdsljdsljvlskdjvlksjvdlkjdsvlksjvdlkvlkjvdslkjvdslklkvdsj
 }

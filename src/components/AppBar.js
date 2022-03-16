@@ -228,6 +228,8 @@ export default function PrimarySearchAppBar() {
               </Badge> 
             </IconButton>
       
+            <Invite></Invite>
+
             <IconButton
               size="large"
               edge="end"
@@ -239,7 +241,6 @@ export default function PrimarySearchAppBar() {
             >
               <AccountCircle />
             </IconButton>
-            <Invite></Invite>
           </Box>
 
           <Popover
