@@ -23,6 +23,8 @@ import Ridningimage from './../images/Ridning.png';
 import Fotballimage from './../images/Fotball.png';
 import Matematikkimage from './../images/Matematikk.png';
 import AddMember from './AddMember'
+import Likes from './MatchFunction';
+import Matchlist from "./MatchList"
 
 const theme = createTheme();
 
@@ -151,6 +153,13 @@ export default function Grouppage(props) {
         </Box>
         {/* <Footer /> */}
       </main>
+      <div className="match-icon-placement">
+        <Likes/>
+      </div>
+      <div className='match-list-placement'>
+        <Matchlist/>
+      </div>
+      
     </ThemeProvider>
   );
 }
