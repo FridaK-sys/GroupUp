@@ -43,10 +43,14 @@
   margin-top: 50px;
   line-height: 10px;
   font-size: 20px;
-  padding-left: 10%;
+  height:100%;
+  width:100%;
+  padding-right: 10%;
 }
 .userInfoLabels #labels {
-  line-height: 20px; 
+  line-height: 20px;
+  text-align: center;
+  width:auto;
 }
 .pic-container {
   display: flex;
@@ -56,11 +60,6 @@
   height: auto;
   padding-bottom: 20px;
 }
-.edit-btn {
-  position: absolute;
-  bottom: 10%;
-  right: 10%;
-}
 .edit-popup {
   width: 80%;
   height: 80%;
@@ -69,8 +68,8 @@
   height: 200px;
 }
 #profilepic {
-  height: auto;
-  width: 20%;
+  height: 200px;
+  width: 200px;
   border-radius: 50%;
 }
 .edit-modal {
@@ -123,4 +122,19 @@
 }
 input[type="file"] {
   display: none;
+}
+.word-container-userpage{
+  background-color: #F0EAD6;
+  padding: 2%;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size:30px;
+  width:fit-content;
+  text-align: center;
+  margin: auto;
+}
+.button-container{
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
 }

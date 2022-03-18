@@ -40,13 +40,12 @@ export class UserProfile extends Component {
          <Box sx={{ flexGrow: 1 }}>
             <AppBar></AppBar>
           </Box>
-          <main style={{ display: 'flex' }}>
+          <main style={{ display: 'flex', height: '100%' }}>
           {/* Hero unit */}
           <MenuList/>
-          
           <form className="userInfoLabels">
           
-            <Typography
+            {/* <Typography
               component="h1"
               variant="h2"
               align="center"
@@ -54,12 +53,12 @@ export class UserProfile extends Component {
               gutterBottom
                 >
                   {this.state.username}s profilside
-            </Typography> 
+            </Typography>  */}
             <div className="pic-container">
               <img src={this.state.image} id="profilepic" alt="" />
             </div>
-
-            <Typography id="labels">
+            <div className= "word-container-userpage">
+             <Typography id="labels">
               Brukernavn : @{this.state.username} {"\n"}{" "}
             </Typography>
             <Typography id="labels">
@@ -68,23 +67,26 @@ export class UserProfile extends Component {
             <Typography id="labels">
               Bio : {this.state.bio} {"\n"}
             </Typography>
-            <div className="edit-btn">
-              <EditUserInfo
-                interests={this.state.interests}
-                bio={this.state.bio}
-              ></EditUserInfo>
             </div>
-            <label className="file-input">
-              <Input
-                type="file"
-                variant = "contained"
-                onChange={this.onImageChange}
-                
-              />
-              Velg profilbilde
-            </label>
+            <div className="button-container">
+              <div className="edit-btn">
+                <EditUserInfo
+                  interests={this.state.interests}
+                  bio={this.state.bio}
+                ></EditUserInfo>
+              </div>
+              <label className="file-input">
+                <Input
+                  type="file"
+                  variant = "contained"
+                  onChange={this.onImageChange}
+                  
+                />
+                Velg profilbilde
+              </label>
+            </div>
           </form>
-        </main>
+          </main>
       </container>
       
     );
