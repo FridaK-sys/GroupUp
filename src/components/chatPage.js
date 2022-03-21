@@ -16,7 +16,27 @@ import ChatMsg from "@mui-treasury/components/chatMsg/ChatMsg";
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
-import IconButton from "@mui/material/IconButton"
+import IconButton from "@mui/material/IconButton";
+import {
+  getFirestore,
+  query,
+  where,
+  collection,
+  getDocs,
+} from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+
+initializeApp({
+  apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
+  authDomain: "groupup-5ffe8.firebaseapp.com",
+  databaseURL:
+    "https://groupup-5ffe8-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "groupup-5ffe8",
+  storageBucket: "groupup-5ffe8.appspot.com",
+  messagingSenderId: "263112867766",
+  appId: "1:263112867766:web:9e823c8699eace63d44b17",
+});
 
 function Copyright() {
   return (
@@ -32,6 +52,9 @@ function Copyright() {
 }
 
 const theme = createTheme();
+
+const auth = getAuth();
+const firestore = getFirestore();
 
 export default function ChatPage() {
   let navigate = useNavigate();
@@ -61,11 +84,23 @@ export default function ChatPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getChatID = () => {
+    let path = window.location.pathname;
+    let id = path.split("/")[path.split("/").length - 1];
+    return id;
+  };
+
   const handleSend = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     let msg = data.get("msg");
-    alert(msg);
+    let chatID = getChatID();
+    console.log("chatOD: " + chatID);
+    const chatsRef = collection(firestore, "chat");
+    const cq = query(chatsRef, where("chatID", "==", chatID));
+    getDocs(cq).then((docs) => {
+      console.log("found chat!");
+    });
   };
 
   return (
@@ -148,7 +183,7 @@ export default function ChatPage() {
               multiline
               rows={2}
             />
-            <IconButton type="submit" >
+            <IconButton type="submit">
               <SendIcon style={{ justifyContent: "center" }} fontSize="large" />
             </IconButton>
           </Box>
