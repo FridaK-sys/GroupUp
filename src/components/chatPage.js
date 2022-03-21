@@ -23,11 +23,13 @@ import {
   where,
   collection,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-initializeApp({
+const  app = initializeApp({
   apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
   authDomain: "groupup-5ffe8.firebaseapp.com",
   databaseURL:
@@ -37,6 +39,7 @@ initializeApp({
   messagingSenderId: "263112867766",
   appId: "1:263112867766:web:9e823c8699eace63d44b17",
 });
+const db = getFirestore(app);
 
 function Copyright() {
   return (
@@ -60,27 +63,15 @@ export default function ChatPage() {
   let navigate = useNavigate();
   const [chatName, setChatName] = React.useState("");
   const [messages, setMessages] = React.useState([]);
-  const [myUserID, setMyUserID] = React.useState(7);
+
+  const [user] = useAuthState(auth);
   React.useEffect(() => {
     let tokenSession = window.sessionStorage.getItem("token");
     let tokenLocal = window.localStorage.getItem("token");
     if (!tokenSession && !tokenLocal) {
       navigate("/");
     }
-    setChatName("Fotball");
-    let msgs = [];
-    for (let i = 0; i < 1000; i++) {
-      let msg = new Object();
-      msg["userID"] = 7;
-      msg["msg"] = "Hei hei! " + String(i);
-      msgs.push(msg);
-      msg = new Object();
-      msg["userID"] = 1;
-      msg["msg"] = "Hei hei på deg!";
-      msgs.push(msg);
-    }
-    setMessages(msgs);
-    console.log(msgs);
+    updateChatWindow();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -90,16 +81,38 @@ export default function ChatPage() {
     return id;
   };
 
+  const updateChatWindow = () => {
+    let chatID = getChatID();
+    const chatsRef = collection(firestore, "chat");
+    const cq = query(chatsRef, where("chatID", "==", chatID));
+    getDocs(cq).then(function(docs) {
+      docs.forEach(function(doc) {
+        let msgs = doc.data().msgs;
+        let name = doc.data().groups[0] + " & " + doc.data().groups[1];
+        setMessages(msgs);
+        setChatName(name);
+      })
+    });
+  }
+
   const handleSend = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    let msg = data.get("msg");
+    let msgText = data.get("msg");
+    let msg = new Object();
+    msg["userID"] = user.uid;
+    msg["msg"] = msgText;
     let chatID = getChatID();
-    console.log("chatOD: " + chatID);
     const chatsRef = collection(firestore, "chat");
     const cq = query(chatsRef, where("chatID", "==", chatID));
-    getDocs(cq).then((docs) => {
-      console.log("found chat!");
+    getDocs(cq).then(function(docs) {
+      docs.forEach(function(doc) {
+        console.log(doc);
+        let msgs = doc.data().msgs;
+        msgs.push(msg);
+        updateDoc(doc.ref, {msgs: msgs});
+      })
+      updateChatWindow();
     });
   };
 
@@ -155,7 +168,7 @@ export default function ChatPage() {
                 }}
               >
                 {messages.map((item, index) => {
-                  let isMe = Boolean(item["userID"] === myUserID);
+                  let isMe = Boolean(item["userID"] === user.uid);
                   let side = "left";
                   if (isMe) {
                     side = "right";

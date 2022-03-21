@@ -33,7 +33,7 @@ function Copyright() {
   
   const groupImage = require("./../images/hest.png");
 
-  const id = uuidv1();
+  const id = 1;
 
 
 export default function Chat() {
