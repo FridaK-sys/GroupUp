@@ -14,6 +14,9 @@ import MenuList from "./HomePageList";
 import { useNavigate } from "react-router-dom";
 import ChatMsg from "@mui-treasury/components/chatMsg/ChatMsg";
 import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import SendIcon from "@mui/icons-material/Send";
+import IconButton from "@mui/material/IconButton"
 
 function Copyright() {
   return (
@@ -34,6 +37,7 @@ export default function ChatPage() {
   let navigate = useNavigate();
   const [chatName, setChatName] = React.useState("");
   const [messages, setMessages] = React.useState([]);
+  const [myUserID, setMyUserID] = React.useState(7);
   React.useEffect(() => {
     let tokenSession = window.sessionStorage.getItem("token");
     let tokenLocal = window.localStorage.getItem("token");
@@ -42,17 +46,27 @@ export default function ChatPage() {
     }
     setChatName("Fotball");
     let msgs = [];
-    let msg = new Object();
-    msg["username"] = "Tor";
-    msg["msg"] = "Hei hei!";
-    msgs.push(msg);
-    msgs["username"] = "Frida";
-    msgs["msg"] = "Hei hei på deg!";
-    msgs.push(msg);
+    for (let i = 0; i < 1000; i++) {
+      let msg = new Object();
+      msg["userID"] = 7;
+      msg["msg"] = "Hei hei! " + String(i);
+      msgs.push(msg);
+      msg = new Object();
+      msg["userID"] = 1;
+      msg["msg"] = "Hei hei på deg!";
+      msgs.push(msg);
+    }
     setMessages(msgs);
     console.log(msgs);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleSend = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    let msg = data.get("msg");
+    alert(msg);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,8 +80,8 @@ export default function ChatPage() {
         <Box style={{ width: "65%" }}>
           <Box
             sx={{
-              pt: 8,
-              pb: 6,
+              mt: 3,
+              mb: 0,
             }}
           >
             <Container maxWidth="sm">
@@ -82,24 +96,66 @@ export default function ChatPage() {
               </Typography>
             </Container>
           </Box>
-          <Container sx={{ py: 0 }} maxWidth="md">
-            {messages.map((item, index) => {
-              // let isMe = item
-              console.log("item: ", item);
-              console.log("usr: ", item["username"]);
-              let name = item["username"];
-              return (
-                <ChatMsg
-                  avatar={""}
-                  messages={[item["msg"],]}
-                />
-              );
-            })}
+          <Container fixed maxWidth="md">
+            <Box
+              sx={{
+                mb: 3,
+                border: 1,
+                borderColor: "grey.1000",
+                borderRadius: "2%",
+              }}
+            >
+              <Box
+                display="flex"
+                flexDirection="column"
+                sx={{
+                  height: "50vh",
+                  mt: 2,
+                  mb: 2,
+                  ml: 2,
+                  mr: 2,
+                  overflow: "hidden",
+                  overflowY: "scroll",
+                  borderRadius: "2%",
+                }}
+              >
+                {messages.map((item, index) => {
+                  let isMe = Boolean(item["userID"] === myUserID);
+                  let side = "left";
+                  if (isMe) {
+                    side = "right";
+                  }
+                  console.log("item: ", item);
+                  console.log("usr: ", item["username"]);
+                  return (
+                    <ChatMsg side={side} avatar={""} messages={[item["msg"]]} />
+                  );
+                })}
+              </Box>
+            </Box>
           </Container>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSend}
+            sx={{ mt: 1, width: "80%" }}
+          >
+            <TextField
+              style={{ textAlign: "left" }}
+              name="msg"
+              hintText="Message Field"
+              floatingLabelText="MultiLine and FloatingLabel"
+              multiline
+              rows={2}
+            />
+            <IconButton type="submit" >
+              <SendIcon style={{ justifyContent: "center" }} fontSize="large" />
+            </IconButton>
+          </Box>
         </Box>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+      <Box sx={{ p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
           GroupUp
         </Typography>
