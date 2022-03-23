@@ -70,14 +70,21 @@ export default function Grouppage(props) {
   const numMembers = members.length;
 
   const getUsername = async (userID) => {
-    const usersRef = collection(firestore, "userInfo");
-    const uq = query(usersRef, where("userID", "==", userID));
-    let username = "";
-    getDocs(uq).then(function (users) {
-      users.forEach(function (user) {
-        username = user.data().username;
-      });
-    })
+    let promise = new Promise(function(myResolve, myReject) {
+      const usersRef = collection(firestore, "userInfo");
+      const uq = query(usersRef, where("userID", "==", userID));
+      getDocs(uq).then(function (users) {
+        let username = "";
+        users.forEach(function (user) {
+          username = user.data().username;
+        });
+        myResolve(username);
+      }).catch(function() {
+        myReject("error");
+      }
+      )
+    });
+    let username = await promise;
     return username;
   };
 
@@ -94,22 +101,13 @@ export default function Grouppage(props) {
           setGroupName(doc.data().name);
           setBio(doc.data().bio);
           userIDs = doc.data().users;
-          // userNames = []
-          // userIDs.forEach(function(userID) {
-          //   const usersRef = collection(firestore, "userInfo");
-          //   const uq = query(usersRef, where("userID", "==", userID))
-          //   getDocs(uq).then(function(users) {
-          //     users.forEach(function(user) {
-          //       userNames.push(user.data().username);
-          //     });
-          //   });
-          // })
         });
       })
       .finally(function () {
         let userNames = [];
         userIDs.forEach(function (userID) {
           let username = getUsername(userID);
+          console.log("getting name for: ", userID)
           userNames.push(username);
         });
         console.log("usernames: ", userNames);
