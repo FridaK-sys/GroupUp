@@ -7,10 +7,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuList from "./HomePageList";
 import ReactRoundedImage from "react-rounded-image";
 import EditGroupInfo from "./EditGroupInfo";
-// import { useLocation } from 'react-router-dom';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import Footer from './Footer'
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 
@@ -25,86 +23,34 @@ import Matematikkimage from './../images/Matematikk.png';
 import AddMember from './AddMember'
 import Likes from './MatchFunction';
 import Matchlist from "./MatchList"
+import {
+  getFirestore,
+  query,
+  where,
+  collection,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const theme = createTheme();
 
-const groups = ["Fotball", "Bil", "Matematikk", "Ridning"];
-const membernums = ["23", "21", "3", "1044"];
-const interests =
-  "Lorem ipsum dolor sit amet. Qui quia quos ab enim nulla 33 consectetur delectus vel dolores cumque 33 dolorem iusto. Est velit explicabo ex ipsum nostrum quo animi exercitationem eos velit fugiat. Qui consequatur ipsa ut error explicabo aut dolore maiores. Non dolores sapiente sit dolorem est similique nobis aut sapiente reprehenderit. Est dolore nihil qui consequatur recusandae eos sapiente cumque ea impedit doloremque. Ut galisum assumenda ut laboriosam adipisci 33 velit obcaecati et asperiores corporis ut consequatur error eum excepturi iusto eum voluptatem tenetur. At sapiente eligendi sed culpa minus et mollitia dolorum et voluptatum obcaecati ut culpa doloribus et atque quia et voluptates ullam. Et deleniti corrupti aut officia fugiat ad quam commodi. Sit laboriosam commodi aut soluta quas ut blanditiis inventore qui nemo provident et tenetur laboriosam 33 Quis voluptate accusantium expedita. Est voluptatem voluptas ex blanditiis minus quo magni voluptatem aut repellat voluptatem. Sit fugit quia eum molestiae harum quo sunt laudantium.";
-const members = [
-  "Ruben",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-];
+initializeApp({
+  apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
+  authDomain: "groupup-5ffe8.firebaseapp.com",
+  databaseURL:
+    "https://groupup-5ffe8-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "groupup-5ffe8",
+  storageBucket: "groupup-5ffe8.appspot.com",
+  messagingSenderId: "263112867766",
+  appId: "1:263112867766:web:9e823c8699eace63d44b17",
+});
+
+const auth = getAuth();
+const firestore = getFirestore();
+
 const images = [Fotballimage, Bilimage, Matematikkimage, Ridningimage];
 
 export default function Grouppage(props) {
@@ -118,6 +64,25 @@ export default function Grouppage(props) {
   //Popover
 
   const [groupID, setGroupID] = useState(null);
+  const [members, setMembers] = useState([]);
+  const [bio, setBio] = useState("");
+  const [groupName, setGroupName] = useState("");
+
+  const numMembers = members.length;
+
+  const reloadGroupInfo = () => {
+      let id = getID();
+      setGroupID(id);
+      const chatsRef = collection(firestore, "groups");
+      const gq = query(chatsRef, where("groupID", "==", id));
+      getDocs(gq).then(function(docs) {
+        docs.forEach(function(doc) {
+          setMembers(doc.data().members);
+          setGroupName(doc.data().name);
+          setBio(doc.data().bio);
+        })
+      })
+  }
 
   const getID = () => {
     let path = window.location.pathname;
@@ -125,7 +90,8 @@ export default function Grouppage(props) {
     return id;
   };
   React.useEffect(() => {
-    setGroupID(getID());
+    reloadGroupInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -159,7 +125,7 @@ export default function Grouppage(props) {
               className="pic-container"
               style={{ position: "relative", top: "90px", left: "-10vw" }}
             >
-              <ReactRoundedImage image={images[groupID]} id="profilepic" />
+              <ReactRoundedImage image={images[1]} id="profilepic" />
               <Typography
                 id="labels"
                 style={{
@@ -169,7 +135,7 @@ export default function Grouppage(props) {
                   fontSize: "40px",
                 }}
               >
-                @{groups[groupID]} {"\n"}{" "}
+                @{groupName} {"\n"}{" "}
               </Typography>
             </div>
             <div
@@ -181,7 +147,7 @@ export default function Grouppage(props) {
                 onClick={openPopover}
                 style={{ fontSize: "22px" }}
               >
-                Antall medlemmer: {membernums[groupID]} {"\n"}{" "}
+                Antall medlemmer: {numMembers} {"\n"}{" "}
               </Button>
               <Popover
                 open={Boolean(anchor)}
@@ -219,7 +185,7 @@ export default function Grouppage(props) {
                         <ListItemIcon>
                           <img
                             alt="of stuff"
-                            src={images[groupID]}
+                            src={images[1]}
                             style={{ height: "60px" }}
                           />
                         </ListItemIcon>
@@ -251,8 +217,8 @@ export default function Grouppage(props) {
                 top: "100px",
               }}
             >
-              <h2>Interesser:</h2>
-              <h4>{interests}</h4>
+              <h2>Bio:</h2>
+              <h4>{bio}</h4>
             </div>
             {/* </div> */}
           </Box>
