@@ -79,8 +79,24 @@ export default function Grouppage() {
     } else {
       locs = null;
     }
+    let max;
+    if (searchParams.get("max") !== "") {
+      console.log("Adding max", parseInt(searchParams.get("maxSize")));
+      max = where("count", "<=", parseInt(searchParams.get("maxSize")));
+    } else {
+      max = null;
+    }
+    let min;
+    if (searchParams.get("min") !== "") {
+      console.log("Adding min", parseInt(searchParams.get("minSize")));
+      min = where("count", ">=", parseInt(searchParams.get("minSize")));
+    } else {
+      min = null;
+    }
+
+
     // let gq = query(groupsRef, [locs]);
-    let gq = query.apply(null, [groupsRef, name, ints, locs].filter((x) => x !== null));
+    let gq = query.apply(null, [groupsRef, name, ints, locs, max, min].filter((x) => x !== null));
     // if (name !== null && ints !== null && locs !== null) {
     //    gq = query(
     //     groupsRef,
