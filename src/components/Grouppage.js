@@ -14,15 +14,17 @@ import { useNavigate } from "react-router-dom";
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 
-import List from "@mui/material/List";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import ListItem from "@mui/material/ListItem";
-import Bilimage from "./../images/Bil.png";
-import Ridningimage from "./../images/Ridning.png";
-import Fotballimage from "./../images/Fotball.png";
-import Matematikkimage from "./../images/Matematikk.png";
-import AddMember from './AddMember';
+import List from '@mui/material/List';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
+import Bilimage from './../images/Bil.png';
+import Ridningimage from './../images/Ridning.png';
+import Fotballimage from './../images/Fotball.png';
+import Matematikkimage from './../images/Matematikk.png';
+import AddMember from './AddMember'
+import Likes from './MatchFunction';
+import Matchlist from "./MatchList"
 
 const theme = createTheme();
 
@@ -257,6 +259,13 @@ export default function Grouppage(props) {
         </Box>
         {/* <Footer /> */}
       </main>
+      <div className="match-icon-placement">
+        <Likes/>
+      </div>
+      <div className='match-list-placement'>
+        <Matchlist/>
+      </div>
+      
     </ThemeProvider>
   );
 }
