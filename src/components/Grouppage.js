@@ -12,17 +12,17 @@ import { useNavigate } from "react-router-dom";
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 
-import List from '@mui/material/List';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
-import Bilimage from './../images/Bil.png';
-import Ridningimage from './../images/Ridning.png';
-import Fotballimage from './../images/Fotball.png';
-import Matematikkimage from './../images/Matematikk.png';
-import AddMember from './AddMember'
-import Likes from './MatchFunction';
-import Matchlist from "./MatchList"
+import List from "@mui/material/List";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListItem from "@mui/material/ListItem";
+import Bilimage from "./../images/Bil.png";
+import Ridningimage from "./../images/Ridning.png";
+import Fotballimage from "./../images/Fotball.png";
+import Matematikkimage from "./../images/Matematikk.png";
+import AddMember from "./AddMember";
+import Likes from "./MatchFunction";
+import Matchlist from "./MatchList";
 import {
   getFirestore,
   query,
@@ -33,7 +33,7 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const theme = createTheme();
 
@@ -63,40 +63,72 @@ export default function Grouppage(props) {
   };
   //Popover
 
-  const [groupID, setGroupID] = useState(null);
   const [members, setMembers] = useState([]);
   const [bio, setBio] = useState("");
   const [groupName, setGroupName] = useState("");
 
   const numMembers = members.length;
 
-  const reloadGroupInfo = () => {
-      let id = getID();
-      setGroupID(id);
-      const chatsRef = collection(firestore, "groups");
-      const gq = query(chatsRef, where("groupID", "==", id));
-      getDocs(gq).then(function(docs) {
-        docs.forEach(function(doc) {
-          setMembers(doc.data().members);
+  const getUsername = async (userID) => {
+    const usersRef = collection(firestore, "userInfo");
+    const uq = query(usersRef, where("userID", "==", userID));
+    let username = "";
+    getDocs(uq).then(function (users) {
+      users.forEach(function (user) {
+        username = user.data().username;
+      });
+    })
+    return username;
+  };
+
+  const reloadGroupInfo = async () => {
+    let name = getName();
+    name = "PU gruppen";
+    setGroupName(name);
+    const chatsRef = collection(firestore, "groups");
+    const gq = query(chatsRef, where("name", "==", name));
+    let userIDs;
+    getDocs(gq)
+      .then(function (docs) {
+        docs.forEach(function (doc) {
           setGroupName(doc.data().name);
           setBio(doc.data().bio);
-        })
+          userIDs = doc.data().users;
+          // userNames = []
+          // userIDs.forEach(function(userID) {
+          //   const usersRef = collection(firestore, "userInfo");
+          //   const uq = query(usersRef, where("userID", "==", userID))
+          //   getDocs(uq).then(function(users) {
+          //     users.forEach(function(user) {
+          //       userNames.push(user.data().username);
+          //     });
+          //   });
+          // })
+        });
       })
-  }
+      .finally(function () {
+        let userNames = [];
+        userIDs.forEach(function (userID) {
+          let username = getUsername(userID);
+          userNames.push(username);
+        });
+        console.log("usernames: ", userNames);
+        console.log("userIDs: ", userIDs);
+        setMembers(userNames);
+      });
+  };
 
-  const getID = () => {
+  const getName = () => {
     let path = window.location.pathname;
-    let id = path.split("/")[path.split("/").length - 1];
-    return id;
+    let name = path.split("/")[path.split("/").length - 1];
+    return name;
   };
   React.useEffect(() => {
     reloadGroupInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  React.useEffect(() => {
-    setGroupID(getID());
-  }, [navigate]);
+  React.useEffect(() => {}, [navigate]);
 
   // let [bio, setBio] = React.useState("Fortell om gruppen!");
   // const handleBioChange = e => {
@@ -226,12 +258,11 @@ export default function Grouppage(props) {
         {/* <Footer /> */}
       </main>
       <div className="match-icon-placement">
-        <Likes/>
+        <Likes />
       </div>
-      <div className='match-list-placement'>
-        <Matchlist/>
+      <div className="match-list-placement">
+        <Matchlist />
       </div>
-      
     </ThemeProvider>
   );
 }
