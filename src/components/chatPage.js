@@ -3,17 +3,12 @@ import AppBar from "./AppBar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuList from "./HomePageList";
 import { useNavigate } from "react-router-dom";
 import ChatMsg from "@mui-treasury/components/chatMsg/ChatMsg";
-import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import IconButton from "@mui/material/IconButton";
@@ -29,7 +24,7 @@ import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const  app = initializeApp({
+initializeApp({
   apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
   authDomain: "groupup-5ffe8.firebaseapp.com",
   databaseURL:
@@ -39,7 +34,6 @@ const  app = initializeApp({
   messagingSenderId: "263112867766",
   appId: "1:263112867766:web:9e823c8699eace63d44b17",
 });
-const db = getFirestore(app);
 
 function Copyright() {
   return (
@@ -99,7 +93,7 @@ export default function ChatPage() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     let msgText = data.get("msg");
-    let msg = new Object();
+    let msg = {};
     msg["userID"] = user.uid;
     msg["msg"] = msgText;
     let chatID = getChatID();

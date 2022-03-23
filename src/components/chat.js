@@ -12,7 +12,6 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuList from "./HomePageList";
 import { useNavigate } from "react-router-dom";
-import { v1 as uuidv1 } from 'uuid';
 
 function Copyright() {
     return (
