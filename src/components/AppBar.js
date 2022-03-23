@@ -331,8 +331,12 @@ export default function PrimarySearchAppBar() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              onClick={() => {
+                navigate("/chat");
+                
+              }}
             >
-              <Badge badgeContent={1} color="error">
+              <Badge badgeContent={0} color="error">
                 <MailIcon />
               </Badge>
             </IconButton>

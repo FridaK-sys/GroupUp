@@ -13,45 +13,45 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuList from "./HomePageList";
 import { useNavigate } from "react-router-dom";
 
-
 function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="Homepage.js">
-        GroupUp
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+    return (
+      <Typography variant="body2" color="text.secondary" align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="Homepage.js">
+          GroupUp
+        </Link>{" "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    );
+  }
+  
+  const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  
+  const theme = createTheme();
+  
+  const groupImage = require("./../images/hest.png");
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-const theme = createTheme();
-
-const groupImage = require("./../images/hest.png");
+  const id = 1;
 
 
-
-//hasDone = true;
-
-export default function Homepage() {
+export default function Chat() {
   let navigate = useNavigate();
+
   React.useEffect(() => {
     let tokenSession = window.sessionStorage.getItem("token");
     let tokenLocal = window.localStorage.getItem("token");
     if (!tokenSession && !tokenLocal) {
       navigate("/");
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar></AppBar>
+        <AppBar />
       </Box>
       <main style={{ display: "flex" }}>
         {/* Hero unit */}
@@ -71,7 +71,7 @@ export default function Homepage() {
                 color="primary.dark"
                 gutterBottom
               >
-                GroupUp 
+                Chat
               </Typography>
             </Container>
           </Box>
@@ -84,15 +84,18 @@ export default function Homepage() {
               color="text.primary"
               paragraph
             >
-              Anbefalte grupper:
+              Dine chatter:
             </Typography>
             <Grid container spacing={4}>
               {cards.map((card) => (
                 <Grid item key={card} xs={12} sm={6} md={4}>
                   <Card
+                      onClick={() => navigate('/chat/'+ id)}
+                  /*
                     onClick={() => {
                       alert("klikk");
                     }}
+                    */
                     style={{ cursor: "pointer", border: "2px solid" }}
                     variant="outlined"
                     sx={{ bgcolor: "text.main", p: 1 }}
@@ -104,10 +107,7 @@ export default function Homepage() {
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        <b>Gruppenavn</b>
-                      </Typography>
-                      <Typography>
-                        Her skal det stå litt info om gruppen.
+                        <b>Chatnavn</b>
                       </Typography>
                     </CardContent>
                   </Card>
@@ -118,7 +118,7 @@ export default function Homepage() {
         </Box>
       </main>
       {/* Footer */}
-      <Box sx={{ p: 6 }} component="footer">
+      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
           GroupUp
         </Typography>
