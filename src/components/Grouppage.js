@@ -134,6 +134,17 @@ export default function Grouppage(props) {
       })
     });
 
+    const userRef = collection(firestore, "userInfo");
+    const uq = query(userRef, where("name", "==", getUsername));
+    getDocs(uq).then(function(docs) {
+      docs.forEach(function(doc) {
+        console.log(doc);
+        let groups = doc.data().groups;
+        groups.push(groupName);
+        updateDoc(doc.ref, {groups: groups});
+      })
+    });
+
     reloadGroupInfo();
     console.log("handleJoin");
     
