@@ -121,6 +121,24 @@ export default function Grouppage(props) {
     let name = path.split("/")[path.split("/").length - 1];
     return name;
   };
+
+  const handleJoin = () => {
+    const groupRef = collection(firestore, "groups");
+    const gq = query(groupRef, where("name", "==", groupName));
+    getDocs(gq).then(function(docs) {
+      docs.forEach(function(doc) {
+        console.log(doc);
+        let users = doc.data().users;
+        users.push(auth.currentUser.getIdToken);
+        updateDoc(doc.ref, {users: users});
+      })
+    });
+
+    reloadGroupInfo();
+    console.log("handleJoin");
+    
+  }
+
   React.useEffect(() => {
     reloadGroupInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -228,7 +246,7 @@ export default function Grouppage(props) {
                   })}
                 </List>
               </Popover>
-              <Button variant="contained" sx={{ mt: 0.5, mb: 0.5 }}>
+              <Button onClick={handleJoin} variant="contained" sx={{ mt: 0.5, mb: 0.5 }}>
                 + Bli medlem
               </Button>
               <AddMember />
