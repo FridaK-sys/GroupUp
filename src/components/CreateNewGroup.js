@@ -9,10 +9,31 @@ import Paper from "@mui/material/Paper";
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from "@mui/material/Avatar";
 
+import { getAuth } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getFirestore, addDoc, where, collection, getDocs } from 'firebase/firestore';
+
+const auth = getAuth();
+const firestore = getFirestore();
+
+
 export default function CreateNewGroup() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [user] = useAuthState(auth);
+  const handleRegister = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const groupRef = addDoc(firestore, "groups", {
+      count: 1,
+      lokasjon: data.get("lokasjon"),
+      name: data.get("name"),
+      
+    });
+
+  }
+
 
   return (
     <div>
