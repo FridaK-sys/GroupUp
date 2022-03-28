@@ -51,10 +51,12 @@ initializeApp({
 const auth = getAuth();
 const firestore = getFirestore();
 
+
 const images = [Fotballimage, Bilimage, Matematikkimage, Ridningimage];
 
 export default function Grouppage(props) {
   let navigate = useNavigate();
+  const [user] = useAuthState(auth);
 
   //Popover
   const [anchor, setAnchor] = useState(null);
@@ -119,28 +121,34 @@ export default function Grouppage(props) {
   const getName = () => {
     let path = window.location.pathname;
     let name = path.split("/")[path.split("/").length - 1];
+    setGroupName(name);
     return name;
   };
 
   const handleJoin = () => {
+    const userid = user.uid;
+    const gn = getName();
     const groupRef = collection(firestore, "groups");
-    const gq = query(groupRef, where("name", "==", groupName));
+    const gq = query(groupRef, where("name", "==", gn));
     getDocs(gq).then(function(docs) {
       docs.forEach(function(doc) {
         console.log(doc);
+        console.log(gn);
+        console.log(userid);
         let users = doc.data().users;
-        users.push(auth.currentUser.getIdToken);
+        users.push(userid);
         updateDoc(doc.ref, {users: users});
       })
     });
 
+    const un = getUsername();
     const userRef = collection(firestore, "userInfo");
-    const uq = query(userRef, where("name", "==", getUsername));
+    const uq = query(userRef, where("userId", "==", userid));
     getDocs(uq).then(function(docs) {
       docs.forEach(function(doc) {
         console.log(doc);
         let groups = doc.data().groups;
-        groups.push(groupName);
+        groups.push(gn);
         updateDoc(doc.ref, {groups: groups});
       })
     });
