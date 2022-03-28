@@ -7,129 +7,179 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuList from "./HomePageList";
 import ReactRoundedImage from "react-rounded-image";
 import EditGroupInfo from "./EditGroupInfo";
-// import { useLocation } from 'react-router-dom';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import Footer from './Footer'
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 
-import List from '@mui/material/List';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
-import Bilimage from './../images/Bil.png';
-import Ridningimage from './../images/Ridning.png';
-import Fotballimage from './../images/Fotball.png';
-import Matematikkimage from './../images/Matematikk.png';
-import AddMember from './AddMember'
-import Likes from './MatchFunction';
-import Matchlist from "./MatchList"
+import List from "@mui/material/List";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListItem from "@mui/material/ListItem";
+import Bilimage from "./../images/Bil.png";
+import Ridningimage from "./../images/Ridning.png";
+import Fotballimage from "./../images/Fotball.png";
+import Matematikkimage from "./../images/Matematikk.png";
+import AddMember from "./AddMember";
+import Likes from "./MatchFunction";
+import Matchlist from "./MatchList";
+import {
+  getFirestore,
+  query,
+  where,
+  collection,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const theme = createTheme();
 
-const groups = ["Fotball", "Bil", "Matematikk", "Ridning"];
-const membernums = ["23", "21", "3", "1044"];
-const interests =
-  "Lorem ipsum dolor sit amet. Qui quia quos ab enim nulla 33 consectetur delectus vel dolores cumque 33 dolorem iusto. Est velit explicabo ex ipsum nostrum quo animi exercitationem eos velit fugiat. Qui consequatur ipsa ut error explicabo aut dolore maiores. Non dolores sapiente sit dolorem est similique nobis aut sapiente reprehenderit. Est dolore nihil qui consequatur recusandae eos sapiente cumque ea impedit doloremque. Ut galisum assumenda ut laboriosam adipisci 33 velit obcaecati et asperiores corporis ut consequatur error eum excepturi iusto eum voluptatem tenetur. At sapiente eligendi sed culpa minus et mollitia dolorum et voluptatum obcaecati ut culpa doloribus et atque quia et voluptates ullam. Et deleniti corrupti aut officia fugiat ad quam commodi. Sit laboriosam commodi aut soluta quas ut blanditiis inventore qui nemo provident et tenetur laboriosam 33 Quis voluptate accusantium expedita. Est voluptatem voluptas ex blanditiis minus quo magni voluptatem aut repellat voluptatem. Sit fugit quia eum molestiae harum quo sunt laudantium.";
-const members = [
-  "Ruben",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-  "Johannes",
-  "Frida",
-  "Hallvard",
-  "Stefan",
-  "Vilde",
-  "Tor",
-  "Leif Einar Lothe",
-];
+initializeApp({
+  apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
+  authDomain: "groupup-5ffe8.firebaseapp.com",
+  databaseURL:
+    "https://groupup-5ffe8-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "groupup-5ffe8",
+  storageBucket: "groupup-5ffe8.appspot.com",
+  messagingSenderId: "263112867766",
+  appId: "1:263112867766:web:9e823c8699eace63d44b17",
+});
+
+const auth = getAuth();
+const firestore = getFirestore();
+
+
 const images = [Fotballimage, Bilimage, Matematikkimage, Ridningimage];
 
 export default function Grouppage(props) {
   let navigate = useNavigate();
+  const [user] = useAuthState(auth);
 
   //Popover
   const [anchor, setAnchor] = useState(null);
+  const [disableBtn, setDisableBtn] = useState(false);
   const openPopover = (event) => {
     setAnchor(event.currentTarget);
   };
   //Popover
 
-  const [groupID, setGroupID] = useState(null);
+  const [members, setMembers] = useState([]);
+  const [bio, setBio] = useState("");
+  const [groupName, setGroupName] = useState("");
 
-  const getID = () => {
-    let path = window.location.pathname;
-    let id = path.split("/")[path.split("/").length - 1];
-    return id;
+  const numMembers = members.length;
+
+  // const getUsername = (userID) => {
+  //   return new Promise(function (resolve, reject) {
+  //     const usersRef = collection(firestore, "userInfo");
+  //     const uq = query(usersRef, where("userID", "==", userID));
+  //     getDocs(uq)
+  //       .then(function (users) {
+  //         // let username = "";
+  //         // users.forEach(function (user) {
+  //         let username = users[0].data().username;
+  //         // });
+  //         console.log("resolving name: ", username);
+  //         resolve(username);
+  //       })
+  //       .catch(function () {
+  //         reject("error");
+  //       });
+  //   });
+  //   // .then(
+  //   //   function (result) {
+  //   //     console.log("got result: ", result);
+  //   //     return result;
+  //   //   },
+  //   //   function (error) {
+  //   //     return "Error";
+  //   //   }
+  //   // );
+  // };
+
+  // const setUsernames = (userIDs) => {
+  //   let userNames = userIDs;
+  //   // userIDs.forEach(async function (userID) {
+  //   //   let username = await getUsername(userID);
+  //   //   console.log("getting name for: ", userID);
+  //   //   userNames.push(username);
+  //   // });
+  //   console.log("usernames: ", userNames);
+  //   console.log("userIDs: ", userIDs);
+  //   setMembers(userNames);
+  // };
+
+  const reloadGroupInfo = async () => {
+    let name = getName();
+    console.log("name: " + name);
+    // name = "PU gruppen";
+    setGroupName(name);
+    const chatsRef = collection(firestore, "groups");
+    const gq = query(chatsRef, where("name", "==", name));
+    let userIDs;
+    getDocs(gq)
+      .then(function (docs) {
+        docs.forEach(function (doc) {
+          setGroupName(doc.data().name);
+          setBio(doc.data().bio);
+          userIDs = doc.data().users;
+        });
+        setMembers(userIDs);
+        if (userIDs.includes(user.uid)) {
+          setDisableBtn(true);
+        } else {
+          setDisableBtn(false);
+        }
+      })
   };
-  React.useEffect(() => {
-    setGroupID(getID());
-  }, []);
+
+  const getName = () => {
+    let path = window.location.pathname;
+    let name = path.split("/")[path.split("/").length - 1];
+    name = name.replaceAll("%20", " ");
+    setGroupName(name);
+    return name;
+  };
+
+  const handleJoin = () => {
+    const userid = user.uid;
+    const gn = getName();
+    const groupRef = collection(firestore, "groups");
+    const gq = query(groupRef, where("name", "==", gn));
+    getDocs(gq).then(function(docs) {
+      docs.forEach(function(doc) {
+        console.log(doc);
+        console.log(gn);
+        console.log(userid);
+        let users = doc.data().users;
+        users.push(userid);
+        updateDoc(doc.ref, {users: users});
+      })
+    });
+
+    const userRef = collection(firestore, "userInfo");
+    const uq = query(userRef, where("userId", "==", userid));
+    getDocs(uq).then(function(docs) {
+      docs.forEach(function(doc) {
+        console.log(doc);
+        let groups = doc.data().groups;
+        groups.push(gn);
+        updateDoc(doc.ref, {groups: groups});
+      })
+    });
+
+    reloadGroupInfo();
+    setDisableBtn(true);
+    console.log("handleJoin");
+    
+  }
 
   React.useEffect(() => {
-    setGroupID(getID());
+    reloadGroupInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
   // let [bio, setBio] = React.useState("Fortell om gruppen!");
@@ -159,7 +209,7 @@ export default function Grouppage(props) {
               className="pic-container"
               style={{ position: "relative", top: "90px", left: "-10vw" }}
             >
-              <ReactRoundedImage image={images[groupID]} id="profilepic" />
+              <ReactRoundedImage image={images[1]} id="profilepic" />
               <Typography
                 id="labels"
                 style={{
@@ -169,7 +219,7 @@ export default function Grouppage(props) {
                   fontSize: "40px",
                 }}
               >
-                @{groups[groupID]} {"\n"}{" "}
+                @{groupName} {"\n"}{" "}
               </Typography>
             </div>
             <div
@@ -181,7 +231,7 @@ export default function Grouppage(props) {
                 onClick={openPopover}
                 style={{ fontSize: "22px" }}
               >
-                Antall medlemmer: {membernums[groupID]} {"\n"}{" "}
+                Antall medlemmer: {numMembers} {"\n"}{" "}
               </Button>
               <Popover
                 open={Boolean(anchor)}
@@ -219,7 +269,7 @@ export default function Grouppage(props) {
                         <ListItemIcon>
                           <img
                             alt="of stuff"
-                            src={images[groupID]}
+                            src={images[1]}
                             style={{ height: "60px" }}
                           />
                         </ListItemIcon>
@@ -232,7 +282,7 @@ export default function Grouppage(props) {
                   })}
                 </List>
               </Popover>
-              <Button variant="contained" sx={{ mt: 0.5, mb: 0.5 }}>
+              <Button onClick={handleJoin} variant="contained" disabled={disableBtn} sx={{ mt: 0.5, mb: 0.5 }}>
                 + Bli medlem
               </Button>
               <AddMember />
@@ -251,8 +301,8 @@ export default function Grouppage(props) {
                 top: "100px",
               }}
             >
-              <h2>Interesser:</h2>
-              <h4>{interests}</h4>
+              <h2>Bio:</h2>
+              <h4>{bio}</h4>
             </div>
             {/* </div> */}
           </Box>
@@ -260,12 +310,11 @@ export default function Grouppage(props) {
         {/* <Footer /> */}
       </main>
       <div className="match-icon-placement">
-        <Likes/>
+        <Likes />
       </div>
-      <div className='match-list-placement'>
-        <Matchlist/>
+      <div className="match-list-placement">
+        <Matchlist />
       </div>
-      
     </ThemeProvider>
   );
 }
