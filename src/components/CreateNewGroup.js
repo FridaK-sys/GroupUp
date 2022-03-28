@@ -8,6 +8,7 @@ import { Grid } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
 
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -18,6 +19,7 @@ const firestore = getFirestore();
 
 
 export default function CreateNewGroup() {
+  let navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -25,13 +27,18 @@ export default function CreateNewGroup() {
   const handleRegister = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const groupRef = addDoc(firestore, "groups", {
+    console.log("Creating new group")
+    let g = {
       count: 1,
       lokasjon: data.get("lokasjon"),
       name: data.get("name"),
-      
-    });
-
+      bio: data.get("biography"),
+      interests: data.get("interesser").split(", "),
+      users: [user.uid]
+    };
+    console.log(g);
+    const groupRef = addDoc(collection(firestore, "groups"), g);
+    navigate("/homepage/grouppage/"+g.name);
   }
 
 
@@ -76,7 +83,7 @@ export default function CreateNewGroup() {
             <Box
               component="form"
               noValidate
-              //onSubmit={handleRegister}
+              onSubmit={handleRegister}
               sx={{ mt: 1 }}
             >
                 <TextField
@@ -95,6 +102,14 @@ export default function CreateNewGroup() {
                 id="biography"
                 label="Kort om gruppen"
                 name="biography"
+                multiline={true}
+              />
+              <TextField
+                margin="normal"
+                fullWidth
+                id="lokasjon"
+                label="Lokajson"
+                name="lokasjon"
                 multiline={true}
               />
               <TextField
