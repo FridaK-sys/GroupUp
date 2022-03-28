@@ -45,6 +45,7 @@ export default function NestedList() {
       groupsRef,
       where("users", "array-contains-any", [user.uid])
     );
+    console.log("Querying: HomePgaeList");
     getDocs(gq).then((docs) => {
       let allGroups = []
       docs.forEach((doc) => {
@@ -56,7 +57,7 @@ export default function NestedList() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     });
     return () => { isMounted = false };
-  });
+  }, [user]);
 
   return (
     <List
