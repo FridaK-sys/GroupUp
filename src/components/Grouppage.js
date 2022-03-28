@@ -51,10 +51,12 @@ initializeApp({
 const auth = getAuth();
 const firestore = getFirestore();
 
+
 const images = [Fotballimage, Bilimage, Matematikkimage, Ridningimage];
 
 export default function Grouppage(props) {
   let navigate = useNavigate();
+  const [user] = useAuthState(auth);
 
   //Popover
   const [anchor, setAnchor] = useState(null);
@@ -132,8 +134,43 @@ export default function Grouppage(props) {
   const getName = () => {
     let path = window.location.pathname;
     let name = path.split("/")[path.split("/").length - 1];
+    setGroupName(name);
     return name;
   };
+
+  const handleJoin = () => {
+    const userid = user.uid;
+    const gn = getName();
+    const groupRef = collection(firestore, "groups");
+    const gq = query(groupRef, where("name", "==", gn));
+    getDocs(gq).then(function(docs) {
+      docs.forEach(function(doc) {
+        console.log(doc);
+        console.log(gn);
+        console.log(userid);
+        let users = doc.data().users;
+        users.push(userid);
+        updateDoc(doc.ref, {users: users});
+      })
+    });
+
+    const un = getUsername();
+    const userRef = collection(firestore, "userInfo");
+    const uq = query(userRef, where("userId", "==", userid));
+    getDocs(uq).then(function(docs) {
+      docs.forEach(function(doc) {
+        console.log(doc);
+        let groups = doc.data().groups;
+        groups.push(gn);
+        updateDoc(doc.ref, {groups: groups});
+      })
+    });
+
+    reloadGroupInfo();
+    console.log("handleJoin");
+    
+  }
+
   React.useEffect(() => {
     reloadGroupInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -239,7 +276,7 @@ export default function Grouppage(props) {
                   })}
                 </List>
               </Popover>
-              <Button variant="contained" sx={{ mt: 0.5, mb: 0.5 }}>
+              <Button onClick={handleJoin} variant="contained" sx={{ mt: 0.5, mb: 0.5 }}>
                 + Bli medlem
               </Button>
               <AddMember />
