@@ -69,23 +69,44 @@ export default function Grouppage(props) {
 
   const numMembers = members.length;
 
-  const getUsername = async (userID) => {
-    let promise = new Promise(function(myResolve, myReject) {
-      const usersRef = collection(firestore, "userInfo");
-      const uq = query(usersRef, where("userID", "==", userID));
-      getDocs(uq).then(function (users) {
-        let username = "";
-        users.forEach(function (user) {
-          username = user.data().username;
-        });
-        myResolve(username);
-      }).catch(function() {
-        myReject("error");
-      }
-      )
-    });
-    let username = await promise;
-    return username;
+  // const getUsername = (userID) => {
+  //   return new Promise(function (resolve, reject) {
+  //     const usersRef = collection(firestore, "userInfo");
+  //     const uq = query(usersRef, where("userID", "==", userID));
+  //     getDocs(uq)
+  //       .then(function (users) {
+  //         // let username = "";
+  //         // users.forEach(function (user) {
+  //         let username = users[0].data().username;
+  //         // });
+  //         console.log("resolving name: ", username);
+  //         resolve(username);
+  //       })
+  //       .catch(function () {
+  //         reject("error");
+  //       });
+  //   });
+  //   // .then(
+  //   //   function (result) {
+  //   //     console.log("got result: ", result);
+  //   //     return result;
+  //   //   },
+  //   //   function (error) {
+  //   //     return "Error";
+  //   //   }
+  //   // );
+  // };
+
+  const setUsernames = async (userIDs) => {
+    let userNames = userIDs;
+    // userIDs.forEach(async function (userID) {
+    //   let username = await getUsername(userID);
+    //   console.log("getting name for: ", userID);
+    //   userNames.push(username);
+    // });
+    console.log("usernames: ", userNames);
+    console.log("userIDs: ", userIDs);
+    setMembers(userNames);
   };
 
   const reloadGroupInfo = async () => {
@@ -104,15 +125,7 @@ export default function Grouppage(props) {
         });
       })
       .finally(function () {
-        let userNames = [];
-        userIDs.forEach(function (userID) {
-          let username = getUsername(userID);
-          console.log("getting name for: ", userID)
-          userNames.push(username);
-        });
-        console.log("usernames: ", userNames);
-        console.log("userIDs: ", userIDs);
-        setMembers(userNames);
+        setUsernames(userIDs);
       });
   };
 
@@ -124,9 +137,7 @@ export default function Grouppage(props) {
   React.useEffect(() => {
     reloadGroupInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  React.useEffect(() => {}, [navigate]);
+  }, [navigate]);
 
   // let [bio, setBio] = React.useState("Fortell om gruppen!");
   // const handleBioChange = e => {
