@@ -60,6 +60,7 @@ export default function Grouppage(props) {
 
   //Popover
   const [anchor, setAnchor] = useState(null);
+  const [disableBtn, setDisableBtn] = useState(false);
   const openPopover = (event) => {
     setAnchor(event.currentTarget);
   };
@@ -99,21 +100,22 @@ export default function Grouppage(props) {
   //   // );
   // };
 
-  const setUsernames = async (userIDs) => {
-    let userNames = userIDs;
-    // userIDs.forEach(async function (userID) {
-    //   let username = await getUsername(userID);
-    //   console.log("getting name for: ", userID);
-    //   userNames.push(username);
-    // });
-    console.log("usernames: ", userNames);
-    console.log("userIDs: ", userIDs);
-    setMembers(userNames);
-  };
+  // const setUsernames = (userIDs) => {
+  //   let userNames = userIDs;
+  //   // userIDs.forEach(async function (userID) {
+  //   //   let username = await getUsername(userID);
+  //   //   console.log("getting name for: ", userID);
+  //   //   userNames.push(username);
+  //   // });
+  //   console.log("usernames: ", userNames);
+  //   console.log("userIDs: ", userIDs);
+  //   setMembers(userNames);
+  // };
 
   const reloadGroupInfo = async () => {
     let name = getName();
-    name = "PU gruppen";
+    console.log("name: " + name);
+    // name = "PU gruppen";
     setGroupName(name);
     const chatsRef = collection(firestore, "groups");
     const gq = query(chatsRef, where("name", "==", name));
@@ -125,15 +127,19 @@ export default function Grouppage(props) {
           setBio(doc.data().bio);
           userIDs = doc.data().users;
         });
+        setMembers(userIDs);
+        if (userIDs.includes(user.uid)) {
+          setDisableBtn(true);
+        } else {
+          setDisableBtn(false);
+        }
       })
-      .finally(function () {
-        setUsernames(userIDs);
-      });
   };
 
   const getName = () => {
     let path = window.location.pathname;
     let name = path.split("/")[path.split("/").length - 1];
+    name = name.replaceAll("%20", " ");
     setGroupName(name);
     return name;
   };
@@ -154,7 +160,6 @@ export default function Grouppage(props) {
       })
     });
 
-    const un = getUsername();
     const userRef = collection(firestore, "userInfo");
     const uq = query(userRef, where("userId", "==", userid));
     getDocs(uq).then(function(docs) {
@@ -167,6 +172,7 @@ export default function Grouppage(props) {
     });
 
     reloadGroupInfo();
+    setDisableBtn(true);
     console.log("handleJoin");
     
   }
@@ -276,7 +282,7 @@ export default function Grouppage(props) {
                   })}
                 </List>
               </Popover>
-              <Button onClick={handleJoin} variant="contained" sx={{ mt: 0.5, mb: 0.5 }}>
+              <Button onClick={handleJoin} variant="contained" disabled={disableBtn} sx={{ mt: 0.5, mb: 0.5 }}>
                 + Bli medlem
               </Button>
               <AddMember />
