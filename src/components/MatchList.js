@@ -18,7 +18,7 @@ export default function Matchlist() {
           <Typography style={{fontsize:'22px'}}>
               Matcher 
           </Typography>
-      </div><List className="match-list-style" sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      </div><List className="match-list-style" sx={{ width: '100%', maxWidth: 360}}>
               {allMatches.map((value) => (
                   <ListItem
                       key={value}

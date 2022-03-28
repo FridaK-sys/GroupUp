@@ -38,15 +38,15 @@ import { useAuthState } from "react-firebase-hooks/auth";
 const theme = createTheme();
 
 initializeApp({
-  apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
-  authDomain: "groupup-5ffe8.firebaseapp.com",
-  databaseURL:
-    "https://groupup-5ffe8-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "groupup-5ffe8",
-  storageBucket: "groupup-5ffe8.appspot.com",
-  messagingSenderId: "263112867766",
-  appId: "1:263112867766:web:9e823c8699eace63d44b17",
-});
+  apiKey: "AIzaSyA-zKmTvd4gLeuOyL4DgIcdbKiXqIogEQA",
+  authDomain: "group-up-2.firebaseapp.com",
+  databaseURL: "https://group-up-2-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "group-up-2",
+  storageBucket: "group-up-2.appspot.com",
+  messagingSenderId: "314900726163",
+  appId: "1:314900726163:web:86fc0bb35db9c1ecfba866",
+  measurementId: "G-RWJWLS4TQW"
+})
 
 const auth = getAuth();
 const firestore = getFirestore();

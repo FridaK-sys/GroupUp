@@ -20,14 +20,16 @@ import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
 initializeApp({
-  apiKey: "AIzaSyCW9axUW2035fjrqjts23aw32k09gtLUdY",
-  authDomain: "groupup-5ffe8.firebaseapp.com",
-  databaseURL: "https://groupup-5ffe8-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "groupup-5ffe8",
-  storageBucket: "groupup-5ffe8.appspot.com",
-  messagingSenderId: "263112867766",
-  appId: "1:263112867766:web:9e823c8699eace63d44b17"
+  apiKey: "AIzaSyA-zKmTvd4gLeuOyL4DgIcdbKiXqIogEQA",
+  authDomain: "group-up-2.firebaseapp.com",
+  databaseURL: "https://group-up-2-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "group-up-2",
+  storageBucket: "group-up-2.appspot.com",
+  messagingSenderId: "314900726163",
+  appId: "1:314900726163:web:86fc0bb35db9c1ecfba866",
+  measurementId: "G-RWJWLS4TQW"
 })
+
 export default function SignUpForm(props) {
   const [passwordError, setPasswordError] = React.useState("");
   // const [emailError, setEmailError] = React.useState("");
@@ -47,32 +49,38 @@ export default function SignUpForm(props) {
     let password1 = data.get("passord");
     let password2 = data.get("gjentaPassord");
     // let error = false;
+    let error = false;
     if (!username) {
       setUsernameError("Dette feltet kan ikke være tomt.");
-      // error = true;
+      error = true;
     }
     if (!fullName) {
       setNameError("Dette feltet kan ikke være tomt.");
-      // error = true;
+      error = true;
     }
     if (!password1) {
       setPasswordError("Dette feltet kan ikke være tomt.");
-      // error = true;
+      error = true;
     }
     if (!birthDate) {
       setAgeError("Dette feltet kan ikke være tomt.");
     }
     if (password1 !== password2) {
       setPasswordError("Passordene må være like.");
-      // error = true;
+      error = true;
     }
     if (isBefore(birthDate, addYears(new Date(), -18))) {
       console.log("old enough: " + birthDate);
     } else {
       console.log("not old enough");
       setAgeError("Brukere må være 18 år eller eldre.");
-      // error = true;
+      error = true;
     }
+    if (password1.length < 6) {
+      setPasswordError("Passordet må være minst 6 symboler langt.");
+      error = true;
+    }
+    if (!error) {
     createUserWithEmailAndPassword(getAuth(), email, password1)
       .then((userCredential) => {
         // Signed in
@@ -87,7 +95,9 @@ export default function SignUpForm(props) {
           interests: interests.split(", ")
         });
         console.log("Document writte with ID: ", docRef.id);
-  });
+        props.handleAbort();
+      });
+    }
 }
   return (
     <Box
