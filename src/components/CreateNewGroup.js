@@ -30,7 +30,7 @@ export default function CreateNewGroup() {
     console.log("Creating new group")
     let g = {
       count: 1,
-      lokasjon: data.get("lokasjon"),
+      location: data.get("lokasjon"),
       name: data.get("name"),
       bio: data.get("biography"),
       interests: data.get("interesser").split(", "),

@@ -56,7 +56,7 @@ export default function AddMember() {
               <EditIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Rediger info
+              Inviter bruker
             </Typography>
             <Box
               component="form"

@@ -11,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuList from "./HomePageList";
+import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { getFirestore, query, where, collection, getDocs } from 'firebase/firestore';
@@ -46,6 +47,7 @@ export default function Grouppage() {
   const [query_param, setQuery] = React.useState(getSearch());
   const [searchParams, setSearchParams] = useSearchParams();
   const [groups, setGroups] = React.useState([]);
+  let navigate = useNavigate();
 
   React.useEffect(() => {
     let isMounted = true;
@@ -59,8 +61,8 @@ export default function Grouppage() {
     }
     const groupsRef = collection(firestore, "groups");
     let name;
-    if (searchParams.get("query") !== "null") {
-      console.log("name", searchParams.get(query));
+    if (searchParams.get("query") !== "null" && searchParams.get("query") !== "" && searchParams.get("query") !== null) {
+      console.log("name", searchParams.get("query"));
       name = where("name", "==", searchParams.get("query"));
     } else {
       name = null;
@@ -75,19 +77,19 @@ export default function Grouppage() {
     let locs;
     if (searchParams.get("location") !== "") {
       console.log("Adding location", searchParams.get("location"));
-      locs = where("lokasjon", "==", searchParams.get("location"));
+      locs = where("location", "==", searchParams.get("location"));
     } else {
       locs = null;
     }
     let max;
-    if (searchParams.get("max") !== "") {
+    if (!isNaN(searchParams.get("max") !== "")) {
       console.log("Adding max", parseInt(searchParams.get("maxSize")));
       max = where("count", "<=", parseInt(searchParams.get("maxSize")));
     } else {
       max = null;
     }
     let min;
-    if (searchParams.get("min") !== "") {
+    if (!isNaN(searchParams.get("min"))) {
       console.log("Adding min", parseInt(searchParams.get("minSize")));
       min = where("count", ">=", parseInt(searchParams.get("minSize")));
     } else {
@@ -118,7 +120,7 @@ export default function Grouppage() {
     //     groupsRef
     //   );
     // }
-
+    console.log("Querying")
     getDocs(gq).then(docs => {
       setGroups([]);
       if (isMounted) {
@@ -130,7 +132,7 @@ export default function Grouppage() {
     });
     return () => { isMounted = false };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  }, [searchParams]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -161,7 +163,7 @@ export default function Grouppage() {
                 <Grid item key={groupName} xs={12} sm={6} md={4}>
                   <Card
                     onClick={() => {
-                      alert("klikk");
+                      navigate(`/homepage/grouppage/${groupName}`);
                     }}
                     style={{ cursor: "pointer", border: '2px solid' }}
                     variant="outlined"

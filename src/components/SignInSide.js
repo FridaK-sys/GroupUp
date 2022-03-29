@@ -74,7 +74,6 @@ export default function SignInSide() {
     } else {
       window.sessionStorage.setItem("token", token);
     }
-    navigate("/homepage");
 
     signInWithEmailAndPassword(auth, data.get("brukernavn"), data.get("passord"))
       .then((userCredential) => {
@@ -83,6 +82,7 @@ export default function SignInSide() {
       })
       .catch((error) => {
       });
+    navigate("/homepage");
   };
   const [signInError, setSignInError] = React.useState("");
   const [signUpOpen, setSignUpOpen] = React.useState(false);
